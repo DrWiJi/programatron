@@ -1,0 +1,5 @@
+Core interpretator classes.
+Term - vertex of syntax tree. (need refactoring)
+SyntaxTreeGenerator - generate/execute syntax tree.
+LexenAnalyzer - build a lexems list.
+ProgrammatronTables - help tables for interpretator.

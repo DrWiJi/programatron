@@ -1,0 +1,21 @@
+﻿<Page
+    x:Class="mobosiSema.addProgramPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:mobosiSema"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <TextBox x:Name="programNameTextBox" Margin="10,95,10,0" TextWrapping="Wrap" Text="New Program" VerticalAlignment="Top"/>
+        <TextBlock Margin="10,10,10,0" TextWrapping="Wrap" Text="Добавление новой программы" VerticalAlignment="Top" Height="53" FontSize="20"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,68,0,0" TextWrapping="Wrap" Text="Имя новой программы" VerticalAlignment="Top" Height="22" Width="380" FontSize="14"/>
+        <TextBox x:Name="descriptionTextBox" Margin="10,165,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="Description" Height="237"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,138,0,0" TextWrapping="Wrap" Text="Описание (необязательно, рекомендуется)" VerticalAlignment="Top" Height="22" Width="380" FontSize="14"/>
+        <Button Content="Отмена" HorizontalAlignment="Left" Margin="10,571,0,0" VerticalAlignment="Top" Click="Button_Click_1"/>
+        <Button Content="Создать" HorizontalAlignment="Left" Margin="124,571,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.502,0.479" Width="266" Click="Button_Click"/>
+
+    </Grid>
+</Page>

@@ -1,0 +1,21 @@
+﻿<Page
+    x:Class="mobosiSema.programEditAndRun"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:mobosiSema"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid x:Name="command">
+        <Button x:ConnectionId='1' Content="Запуск" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top"                       />
+        <TextBox x:ConnectionId='2' x:Name="codeProg" HorizontalAlignment="Left" Margin="10,53,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="300" Width="380"                                   AcceptsReturn="True"/>
+        <Button x:ConnectionId='3' Content="Сохранить" HorizontalAlignment="Left" Margin="281,0,0,0" VerticalAlignment="Top"                     />
+        <TextBlock x:Name="log" HorizontalAlignment="Left" Margin="10,358,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="220" Width="380" FontSize="14"/>
+        <TextBox x:Name="command1" HorizontalAlignment="Left" Margin="10,592,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="266"/>
+        <Button x:ConnectionId='4' Content="Enter" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="281,582,0,0"                       />
+
+    </Grid>
+</Page>
+

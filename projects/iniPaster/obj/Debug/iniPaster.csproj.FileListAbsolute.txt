@@ -1,0 +1,5 @@
+C:\Users\Tontu\documents\visual studio 2013\Projects\WindowsFormsApplication1\iniPaster\obj\Debug\iniPaster.csprojResolveAssemblyReference.cache
+C:\Users\Tontu\documents\visual studio 2013\Projects\WindowsFormsApplication1\iniPaster\bin\Debug\iniPaster.dll
+C:\Users\Tontu\documents\visual studio 2013\Projects\WindowsFormsApplication1\iniPaster\bin\Debug\iniPaster.pdb
+C:\Users\Tontu\documents\visual studio 2013\Projects\WindowsFormsApplication1\iniPaster\obj\Debug\iniPaster.dll
+C:\Users\Tontu\documents\visual studio 2013\Projects\WindowsFormsApplication1\iniPaster\obj\Debug\iniPaster.pdb

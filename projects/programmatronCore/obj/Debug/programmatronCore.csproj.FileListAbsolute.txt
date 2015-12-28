@@ -1,0 +1,5 @@
+C:\Users\Tontu\documents\visual studio 2013\Projects\WindowsFormsApplication1\programmatronCore\obj\Debug\programmatronCore.csprojResolveAssemblyReference.cache
+C:\Users\Tontu\documents\visual studio 2013\Projects\WindowsFormsApplication1\programmatronCore\bin\Debug\programmatronCore.dll
+C:\Users\Tontu\documents\visual studio 2013\Projects\WindowsFormsApplication1\programmatronCore\bin\Debug\programmatronCore.pdb
+C:\Users\Tontu\documents\visual studio 2013\Projects\WindowsFormsApplication1\programmatronCore\obj\Debug\programmatronCore.dll
+C:\Users\Tontu\documents\visual studio 2013\Projects\WindowsFormsApplication1\programmatronCore\obj\Debug\programmatronCore.pdb

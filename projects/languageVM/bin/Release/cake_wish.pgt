@@ -1,0 +1,18 @@
+
+
+
+
+
+вывод—трокой("Hello and welcome to the aperture science center");
+вывод—трокой("The cake isn't the lie, please, belive me");
+переменна€ желание_тортика;
+вывод("Do you wanna some cake? :) ");
+ввод(желание_тортика);
+
+
+
+
+
+
+
+вывод—трокой(желание_тортика);

@@ -57,7 +57,7 @@ namespace languageVM
         static void executeCode(String code)
         {
             LexemAnalyzer sa = new LexemAnalyzer(code);
-            List<String> list = sa.analize();
+            List<Lexem> list = sa.analize();
             SyntaxTreeGenerator gen = new SyntaxTreeGenerator(list);
             gen.generateTree();
             gen.doCode();

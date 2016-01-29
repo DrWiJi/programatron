@@ -77,35 +77,13 @@ namespace testing
 
         void testingLexemAnalyzer()
         {
-            LexemAnalyzer sa = new LexemAnalyzer("переменная а=0;переменная б=2;\n\rа = б+2;\n\rб = а-3;\n\rвывод(а);\n\rвывод(б);\n\r");
-            List<String> lexems = sa.analize();
-            List<String> sampleLexems = new List<String>{
-                "переменная","а","=","0",";","переменная","б","=","2",";","а","=","б","+","2",";","б","=","а","-","3",";","вывод","(","а",")",";","вывод","(","б",")",";",ProgrammatronTables.SourceCodeEnd
-            };
-            if(lexems.Count!=sampleLexems.Count)
-            {
-                Console.WriteLine("Lexem Analyzer test FAIL - count of lexems");
-                return;
-            }
-            bool success = true;
-            for(int i = 0;i<sampleLexems.Count;i++)
-            {
-                if(lexems[i]!=sampleLexems[i])
-                {
-                    Console.WriteLine("Lexem Analyzer test FAIL - except " +sampleLexems[i]+", returned "+lexems[i]+".");
-                    success = false;
-                }
-            }
-            if (success)
-                Console.WriteLine("Lexem Analyzer test SUCCESSFUL");
-            else
-                Console.WriteLine("Lexem Analyzer test FAIL");
+            //TO DO реализовать юнит тесты для этого участка
         }
 
         void testingInterpretator()
         {
             LexemAnalyzer sa = new LexemAnalyzer("универсальная а=40;универсальная б=-60;универсальная в=а+б;универсальная сальная = \"1 строка\";универсальная несальная = \"2 строка\";универсальная склейкаПервая = сальная + несальная;сальная = \"\";универсальная склейкаВторая = сальная + несальная;");
-            List<String> list = sa.analize();
+            List<Lexem> list = sa.analize();
             SyntaxTreeGenerator gen = new SyntaxTreeGenerator(list);
             gen.generateTree();
             gen.doCode();

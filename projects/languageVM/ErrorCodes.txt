@@ -1,0 +1,20 @@
+﻿Error codes
+xxx - environment
+	101 - lexemAnalyzer
+	100 - syntaxAnalyzer
+xx - level
+	00 - wrong symbol
+	01 - wrong lexem
+	10 - wrong existing construction
+	11 - construction is not exist
+xxxx - code
+	9999 - inside error wrong tree construction
+	0001 - empty Source code
+	0002 - lexem analyzer algorithm error, empty lexem generated
+	0003 - wrong type in definition
+	0004 - wrong syntax construction
+	0005 - wrong variable assign
+	0006 - wrong assign
+	0007 - wrong arguments count
+	0008 - missing function
+	0009 - invalid arguments

@@ -5,18 +5,6 @@
  *--------------------------------------------------------------------------------*/
 //..end "File Description"
 
-/*
- * Ядро интерпретатора программатрона
- * Автор - Алексеев Сергей aka DrWiJi (Tontu) 2serales96@mail.ru
- * Волгоград, 2015, все права защищены.
- * 
- * При поддержке ВолгГТУ
- * 
- * 
- * Наиважнейшие модули, обеспечивающие работу программатрона на машине: лексический анализатор,
- * синтаксический анализатор, сам интерпретатор и вся инфраструктура к ним.
- * 
- */
 
 using System;
 using System.Collections.Generic;
@@ -29,8 +17,10 @@ namespace programmatronCore
 	public class LexemAnalyzer
 	{
 		String sourceCode;
-		List<String> lexems;
+		List<Lexem> lexems;
 		int i;
+        int oldIndex = 0;
+        int currentStringNumber=1;
 		bool findQuote = false;
 		
 		public LexemAnalyzer(String sourceCode)
@@ -47,17 +37,17 @@ namespace programmatronCore
 		
 		void initialize()
 		{
-		    lexems = new List<String>();
+		    lexems = new List<Lexem>();
 		    i = 0;
 		}
 		
-		public List<String> analizeFrom(String otherCode)
+		public List<Lexem> analizeFrom(String otherCode)
 		{
 		    this.sourceCode = otherCode;
 		    return analize();
 		}
 		
-		public List<String> analize()
+		public List<Lexem> analize()
 		{
 		    try
 		    {
@@ -67,11 +57,14 @@ namespace programmatronCore
 		        {
 		            while(isNeedSkipSymbol())
 		            {
+                        checkNextString();
 		                i++;
 		            }
+                    oldIndex = i;
 		            takeLexem();
 		            while (!endOfSourceCode() && isNeedSkipSymbol())
-		            {
+                    {
+                        checkNextString();
 		                i++;
 		            }
 		        }
@@ -79,15 +72,23 @@ namespace programmatronCore
 		    catch (Exception ex)
 		    {
 		        if (ex is ArgumentException)
-		            VMenvironment.Environment.reporter.describeError("Невозможно запустить синтаксический анализ. Вероятно, исходный код пуст. Напишите код, а затем запускайте.", 10000001, 0, "");
+		            VMenvironment.Environment.reporter.describeError("Невозможно запустить синтаксический анализ. Вероятно, исходный код пуст. Напишите код, а затем запускайте.", 101000001, 0, "Пустой код");
 		    }
 		    finally
 		    {
-		        lexems.Add(ProgrammatronTables.SourceCodeEnd);
+		        lexems.Add(new Lexem(currentStringNumber+1,i,i,ProgrammatronTables.SourceCodeEnd));
 		    }
 		    return this.lexems;
 		
 		}
+
+        private void checkNextString()
+        {
+            if (symbolIsStringEnd())
+            {
+                currentStringNumber++;
+            }
+        }
 		
 		void checkArgs()
 		{
@@ -112,6 +113,11 @@ namespace programmatronCore
 		{
 		    return sourceCode[i] == '\n' || sourceCode[i] == '\t' || sourceCode[i] == '\r' || sourceCode[i] == ' ';
 		}
+        
+        bool symbolIsStringEnd()
+        {
+            return sourceCode[i] == '\n';
+        }
 		
 		void takeLexem()
 		{
@@ -145,9 +151,9 @@ namespace programmatronCore
 		
 		    if (currentLexem.Length == 0)
 		    {
-		        throw new ArgumentException("Сгенерирована пустая лексема. Позиция i = " + i + ". Существующих лексем - " + lexems.Count + ".");
+                VMenvironment.Environment.reporter.describeError("Сгенерирована пустая лексема", 101000002, currentStringNumber, "Внутренняя ошибка");
 		    }
-		    lexems.Add(currentLexem);
+		    lexems.Add(new Lexem(currentStringNumber,oldIndex,i,currentLexem));
 		}
 		
 		bool endOfSourceCode()
@@ -166,12 +172,12 @@ namespace programmatronCore
 		
 		bool symbolIsEndOfLexem()
 		{
-		    return (ProgrammatronTables.ReservedSymbols.Any(ch => ch == sourceCode[i].ToString()) || sourceCode[i] == ' ' || sourceCode[i] == '\0');
+		    return (ProgrammatronTables.ReservedSymbols.Contains(sourceCode[i].ToString()) || sourceCode[i] == ' ' || sourceCode[i] == '\0');
 		}
 		
 		bool symbolIsReserved()
 		{
-		    return ProgrammatronTables.ReservedSymbols.Any(ch => ch == sourceCode[i].ToString());
+		    return ProgrammatronTables.ReservedSymbols.Contains(sourceCode[i].ToString());
 		}
 		
 		bool symbolIsNotEndOfLexem()
@@ -179,7 +185,7 @@ namespace programmatronCore
 		    return !symbolIsEndOfLexem();
 		}
 		
-		List<String> Lexems
+		List<Lexem> Lexems
 		{
 			get
 			{
@@ -193,8 +199,8 @@ namespace programmatronCore
 		Term parent;
 		TermType type;
 		List<Term> childs;
-		String value;
-		String name;
+		Lexem value;
+		Lexem name;
 		bool valueIsExpression;
 		bool valueIsAssigned;
 		VariableType variableType;
@@ -212,7 +218,7 @@ namespace programmatronCore
 			}
 		}
 		
-		public String Name
+		public Lexem Name
 		{
 			get
 			{
@@ -239,7 +245,7 @@ namespace programmatronCore
 		    this.variableType = varType;
 		}
 		
-		public Term(Term parent, TermType type, String value)
+		public Term(Term parent, TermType type, Lexem value)
 		{
 		    initialize();
 		    this.parent = parent;
@@ -285,7 +291,7 @@ namespace programmatronCore
 			}
 		}
 		
-		public String Value
+		public Lexem Value
 		{
 			get
 			{
@@ -381,7 +387,7 @@ namespace programmatronCore
 	public class SyntaxTreeGenerator
 	{
 		Term headOfSyntaxTree;
-		List<String> lexems;
+		List<Lexem> lexems;
 		Dictionary<String, String> variablesValues;
 		
 		//TO DO переместить в Term
@@ -389,7 +395,7 @@ namespace programmatronCore
 		Term currentHead;
 		int lexemIndex = 0;
 		
-		public SyntaxTreeGenerator(List<String> lexems)
+		public SyntaxTreeGenerator(List<Lexem> lexems)
 		{
 		    initialize();
 		    this.lexems = lexems;
@@ -404,11 +410,11 @@ namespace programmatronCore
 		{
 		    headOfSyntaxTree = new Term(TermType.program);
 		    currentHead = headOfSyntaxTree;
-		    lexems = new List<String>();
+		    lexems = new List<Lexem>();
 		    variablesValues = new Dictionary<String, String>();
 		}
 		
-		public void generateTreeFromLexems(List<String> otherLexems)
+		public void generateTreeFromLexems(List<Lexem> otherLexems)
 		{
 		    this.lexems = otherLexems;
 		    generateTree();
@@ -440,7 +446,7 @@ namespace programmatronCore
 		            if (child.VariableType == VariableType.none)
 		            {
 		                //TO DO добавить в лог внутреннюю обработку рапортов и здесь сделать поддержку обработки ошибок
-		                throw new Exception();
+                        VMenvironment.Environment.reporter.describeError(String.Format("Несуществующий тип указан в определении переменной {0}", child.Value), 100010003, lexems[lexemIndex].StringNumber, "Ошибка определения");
 		            }
 		            child.Name = getVariableNameFromDefinition(oldLexemIndex);
 		            currentHead.addChild(child);
@@ -454,8 +460,8 @@ namespace programmatronCore
 		            if (child.VariableType == VariableType.none)
 		            {
 		                //TO DO добавить в лог внутреннюю обработку рапортов и здесь сделать поддержку обработки ошибок
-		                throw new Exception();
-		            }
+                        VMenvironment.Environment.reporter.describeError(String.Format("Несуществующий тип указан в определении и присвоении переменной {0}", child.Value), 100010003, lexems[lexemIndex].StringNumber, "Ошибка определения");
+                    }
 		            child.Name = getVariableNameFromDefinition(oldLexemIndex);
 		            parseValueLexemToTree(child, parseStartIndex, parseEndIndex);
 		            currentHead.addChild(child);
@@ -481,7 +487,7 @@ namespace programmatronCore
 		        }
 		        else if (typeOfNextTerm == TermType.error)
 		        {
-		            throw new Exception("Ошибка интерпретируемого кода. Невозможно определить тип выражения.");
+                    VMenvironment.Environment.reporter.describeError("Неизвестная синтаксическая структура", 100110004, lexems[lexemIndex].StringNumber, "Синтаксическая ошибка");
 		        }
 		         lexemIndex++;
 		    } while ((typeOfNextTerm != TermType.none || typeOfNextTerm != TermType.error) && lexemIndex < lexems.Count - 1);
@@ -508,7 +514,7 @@ namespace programmatronCore
 		    }
 		}
 		
-		private String getFunctionNameFromCall(int startIndex)
+		private Lexem getFunctionNameFromCall(int startIndex)
 		{
 		    return lexems[startIndex];
 		}
@@ -597,12 +603,12 @@ namespace programmatronCore
 		    return findFirstSymbol(";",start,lexems.Count-1);
 		}
 		
-		private String getVariableNameFromAssignment(int startLexemIndex)
+		private Lexem getVariableNameFromAssignment(int startLexemIndex)
 		{
 		    return lexems[startLexemIndex];
 		}
 		
-		private String getVariableNameFromDefinition(int startLexemIndex)
+		private Lexem getVariableNameFromDefinition(int startLexemIndex)
 		{
 		    return lexems[startLexemIndex + 1];
 		}
@@ -660,9 +666,6 @@ namespace programmatronCore
 		{
 		    Term subTerm = new Term();
 		    bool inParentheses = parenthesesCorrection(ref startIndex, ref endIndex);
-		
-		    //TO DO отрефакторить и отладить
-		
 		    if (endIndex == startIndex && (valueIsString(startIndex) || valueIsNumber(startIndex)))
 		    {
 		        subTerm.Value = lexems[startIndex];
@@ -881,6 +884,8 @@ namespace programmatronCore
 		
 		private bool variableValueIsString(String value)
 		{
+            if (value.Length == 0)
+                return false;
 		    return value[0] == '\"' && value[value.Length - 1] == '\"';
 		}
 		
@@ -930,7 +935,7 @@ namespace programmatronCore
 		
 		private bool lexemIsArithmeticOparation(int index)
 		{
-		    return ProgrammatronTables.ArithmeticOperations.Any(s => s == lexems[index]);
+		    return ProgrammatronTables.ArithmeticOperations.Contains(lexems[index]);
 		}
 		
 		//TO DO вынести код ниже вообще в отдельный класс выполнителя программы
@@ -945,42 +950,49 @@ namespace programmatronCore
 		/// </summary>
 		private void doProcessing(Term workingTerm)
 		{
-		    if (workingTerm.Type == TermType.program)
-		    {
-		        //TO DO вынести этот код отдельно ПОСЛЕ выделения всей функции в отдельный класс
-		        for (int i = 0; i < workingTerm.Childs.Count; i++)
-		        {
-		            doProcessing(workingTerm.Childs[i]);
-		        }
-		#if DEBUG
+            try
+            {
+                if (workingTerm.Type == TermType.program)
+                {
+                    //TO DO вынести этот код отдельно ПОСЛЕ выделения всей функции в отдельный класс
+                    for (int i = 0; i < workingTerm.Childs.Count; i++)
+                    {
+                        doProcessing(workingTerm.Childs[i]);
+                    }
+#if DEBUG
 		        foreach (KeyValuePair<string, string> current in variablesValues)
 		            VMenvironment.Environment.log.message(current.Key + "=" + current.Value);
-		#endif
-		
-		    }
-		    if (workingTerm.Type == TermType.variableAssignment)
-		    {
-		        if (variablesValues.ContainsKey(workingTerm.Name))
-		        {
-		            variablesValues[workingTerm.Name] = calculateValue(workingTerm);
-		        }
-		        else
-		        {
-		            VMenvironment.Environment.log.message("Проиводится присвоение несуществующей переменной " + workingTerm.Name);
-		        }
-		    }
-		    if (workingTerm.Type == TermType.variableDefinition)
-		    {
-		        variablesValues.Add(workingTerm.Name, "");
-		    }
-		    if (workingTerm.Type == TermType.variableDefinitionAssignment)
-		    {
-		        variablesValues.Add(workingTerm.Name, calculateValue(workingTerm));
-		    }
-		    if(workingTerm.Type == TermType.functionCall)
-		    {
-		        functionCaller(workingTerm);
-		    }
+#endif
+
+                }
+                if (workingTerm.Type == TermType.variableAssignment)
+                {
+                    if (variablesValues.ContainsKey(workingTerm.Name))
+                    {
+                        variablesValues[workingTerm.Name] = calculateValue(workingTerm);
+                    }
+                    else
+                    {
+                        VMenvironment.Environment.reporter.describeError("Неизвестный идентификатор " + workingTerm.Name, 100100005, workingTerm.Name.StringNumber, "Ошибка присвоения");
+                    }
+                }
+                if (workingTerm.Type == TermType.variableDefinition)
+                {
+                    variablesValues.Add(workingTerm.Name, "");
+                }
+                if (workingTerm.Type == TermType.variableDefinitionAssignment)
+                {
+                    variablesValues.Add(workingTerm.Name, calculateValue(workingTerm));
+                }
+                if (workingTerm.Type == TermType.functionCall)
+                {
+                    functionCaller(workingTerm);
+                }
+            }
+            catch(Exception ex)
+            {
+                VMenvironment.Environment.log.message("Выполнение прервано");
+            }
 		}
 		
 		void functionCaller(Term term)
@@ -1011,12 +1023,12 @@ namespace programmatronCore
 		            }
 		            else
 		            {
-		                throw new ArgumentException("Нельзя присваивать значения ничему, кроме переменных");
+                        VMenvironment.Environment.reporter.describeError("Нельзя использовать функцию \"ввод\" ни для чего, кроме переменных", 100100006,term.Childs[0].Name.StringNumber,"Неверный вызов");
 		            }
 		        }
 		        else
 		        {
-		            throw new ArgumentException("Неверное количество аргументов");
+                    VMenvironment.Environment.reporter.describeError("Неверное количество аргументов",100100007,term.Name.StringNumber,"Неверный вызов");
 		        }
 		    }
 		    else if (term.Name == "выводСтрокой")
@@ -1028,24 +1040,22 @@ namespace programmatronCore
 		    }
 		    else
 		    {
-		        throw new NotImplementedException("Отсутствует такая функция в области видимости");
+		        VMenvironment.Environment.reporter.describeError(String.Format("Отсутствует такая функция {0} в области видимости",term.Name),100100008,term.Name.StringNumber,"Несуществующая функция");
 		    }
 		}
-		
-		//TO DO добавить обработку ошибок во время построения дерева плюс расширить  лексемы - пусть лексема будет не только 
-		//строкой
-		//но и пусть хранит строку и все необходимые атрибуты, чтобы потом можно было легко отлавливать ошибки в исполняемом коде
-		//и корректно их выводить
 		
 		String calculateValue(Term term)
 		{
 		    if (term.Type == TermType.variableAssignment || term.Type == TermType.variableDefinitionAssignment)
 		    {
-		        if (term.Childs.Count == 1)
-		            return calculateValue(term.Childs[0]);
-		        else
-		            throw new ArgumentException("Ошибка в построении синтаксического дерева. В присвоении неверное количество ветвлений.");
-		    }
+                if (term.Childs.Count == 1)
+                    return calculateValue(term.Childs[0]);
+                else
+                {
+                    VMenvironment.Environment.reporter.describeError("Неверно построено синтаксическое дерево. Обратитесь в поддержку.", 100119999, term.Childs[0].Name.StringNumber, "Внутренняя ошибка");
+                    return "";
+                }
+            }
 		    else if (term.Type == TermType.mathAddition)
 		    {
 		        //TO DO добавить поддержку длинной арифметики
@@ -1078,15 +1088,18 @@ namespace programmatronCore
 		        }
 		        else
 		        {
-		            throw new Exception("Неизвестный идентификатор.");
-		        }
+                    VMenvironment.Environment.reporter.describeError("Неизвестный идентификатор " + term.Name, 100100005, term.Name.StringNumber, "Неверный идентификатор");
+                    return "";
+                }
 		    }
 		    else
 		    {
-		        throw new NotImplementedException("Не реализовано выполнение дерева по операции.");
-		    }
+                VMenvironment.Environment.reporter.describeError("Выполнение оператора не реализовано " + term.Name, 100100005, term.Name.StringNumber, "Выполнение не реализовано");
+                return "";
+            }
 		}
 		
+        //TO DO Декостелировать тут
 		private string calculateOperation(Term term, Func<String, String, String> operation)
 		{
 		    if (term.Childs.Count == 2)
@@ -1107,8 +1120,9 @@ namespace programmatronCore
 		        String rightValue = calculateValue(term.Childs[0]);
 		        return operation(leftValue,rightValue);
 		    }
-		    throw new ArgumentException("Неверно построено синтаксическое дерево.");
-		}
+            VMenvironment.Environment.reporter.describeError("Неверно построено синтаксическое дерево. Обратитесь в поддержку.", 100119999, term.Childs[0].Name.StringNumber, "Внутренняя ошибка");
+            return "";
+        }
 		
 		private String operationMul(String leftValue, String rightValue)
 		{
@@ -1119,15 +1133,16 @@ namespace programmatronCore
 		    int rightIntValue = 0;
 		    if (variableValueIsString(leftValue) || variableValueIsString(rightValue))
 		    {
-		        throw new ArgumentException("Нельзя умножать строки");
-		    }
+                VMenvironment.Environment.reporter.describeError("Выполнение оператора не реализовано для " + leftValue + rightValue+". Нельзя умножать строки", 100100005, -1, "Выполнение не реализовано");
+            }
 		    if (float.TryParse(leftValue, NumberStyles.Any, new CultureInfo("en-US"), out leftFloatValue) && float.TryParse(rightValue, NumberStyles.Any, new CultureInfo("en-US"), out rightFloatValue))
 		    {
 		        return (leftFloatValue * rightFloatValue).ToString(new CultureInfo("en-US"));
 		    }
-		
-		    throw new ArgumentException("Недопустимая операция. Аргументы не подходят.");
-		}
+
+            VMenvironment.Environment.reporter.describeError("Аргументы не подходят для указанной операции для " + leftValue + rightValue, 100100005, -1, "Неверные аргументы");
+            return "";
+        }
 		
 		private String operationDiv(String leftValue, String rightValue)
 		{
@@ -1145,9 +1160,10 @@ namespace programmatronCore
 		    {
 		        return (leftFloatValue / rightFloatValue).ToString(new CultureInfo("en-US"));
 		    }
-		
-		    throw new ArgumentException("Недопустимая операция. Аргументы не подходят.");
-		}
+
+            VMenvironment.Environment.reporter.describeError("Аргументы не подходят для указанной операции для " + leftValue + rightValue, 100100005, -1, "Неверные аргументы");
+            return "";
+        }
 		
 		private String operationDec(String leftValue, String rightValue)
 		{
@@ -1159,14 +1175,15 @@ namespace programmatronCore
 		    if (variableValueIsString(leftValue) || variableValueIsString(rightValue))
 		    {
 		        //что-то из операндов строки, складываем как строки
-		        throw new ArgumentException("Нельзя вычитать строки");
-		    }
+                VMenvironment.Environment.reporter.describeError("Выполнение оператора не реализовано для " + leftValue + rightValue + ". Нельзя умножать строки", 100100005, -1, "Выполнение не реализовано");
+            }
 		    if (float.TryParse(leftValue, NumberStyles.Any, new CultureInfo("en-US"), out leftFloatValue) && float.TryParse(rightValue, NumberStyles.Any, new CultureInfo("en-US"), out rightFloatValue))
 		    {
 		        return (leftFloatValue - rightFloatValue).ToString(new CultureInfo("en-US"));
 		    }
-		    throw new ArgumentException("Недопустимая операция. Аргументы не подходят.");
-		}
+            VMenvironment.Environment.reporter.describeError("Аргументы не подходят для указанной операции для " + leftValue + rightValue, 100100005, -1, "Неверные аргументы");
+            return "";
+        }
 		
 		private String operationAdd(String leftValue, String rightValue)
 		{
@@ -1185,12 +1202,17 @@ namespace programmatronCore
 		    {
 		        return (leftFloatValue + rightFloatValue).ToString(new CultureInfo("en-US"));
 		    }
-		   
-		    throw new ArgumentException("Недопустимая операция. Аргументы не подходят.");
-		}
+
+            VMenvironment.Environment.reporter.describeError("Аргументы не подходят для указанной операции для " + leftValue + rightValue, 100100005, -1, "Неверные аргументы");
+            return "";
+        }
 		
 		String buildStringSumm(String a,String b)
 		{
+            if (a.Length == 0)
+                return b;
+            if (b.Length == 0)
+                return a;
 		    String result = "";
 		    int i;
 		    if(a[0]=='\"')
@@ -1237,6 +1259,8 @@ namespace programmatronCore
 		
 		String getStringVariableWithoutQuotes(String s)
 		{
+            if (s.Length == 0)
+                return "";
 		    if(s[0]=='\"'&&s[s.Length-1]=='\"')
 		    {
 		        return s.Remove(0,1).Remove(s.Length - 2, 1);

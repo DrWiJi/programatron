@@ -196,4 +196,77 @@ namespace programmatronCore
 		    reports.RemoveAll(rep => rep.code == code);
 		}
 	}
+
+    public class Lexem
+    {
+        public int StringNumber
+        {
+            get;
+            private set;
+        }
+        public int StartSymbolNumber
+        {
+            get;
+            private set;
+        }
+        public int EndSymbolNumber
+        {
+            get;
+            private set;
+        }
+        public String PageName
+        {
+            get;
+            set;
+        }
+        public String Value;
+        public Lexem(int stringNumber,int start,int end)
+        {
+            StringNumber = stringNumber;
+            StartSymbolNumber = start;
+            EndSymbolNumber = end;
+        }
+        public Lexem(int stringNumber,int start,int end,String value):this(stringNumber,start,end)
+        {
+            Value = value;
+            validateData();
+        }
+        public override string ToString()
+        {
+            return Value;
+        }
+
+        public void setOtherLexem(String value,int start,int end, int stringNumber)
+        {
+            StringNumber = stringNumber;
+            StartSymbolNumber = start;
+            EndSymbolNumber = end;
+            Value = value;
+            validateData();
+        }
+
+        public static implicit operator String(Lexem lex)
+        {
+            return lex.Value;
+        }
+
+        public Char this[int i]
+        {
+            get { return Value[i]; }
+        }
+
+        public int Length
+        {
+            get {return Value.Length; }
+        }
+
+
+        private void validateData()
+        {
+            if(Value.Length==0)
+            {
+                throw new ArgumentException("Обнаружена пустая лексема", "Lexem.Value", null);
+            }
+        }
+    }
 }

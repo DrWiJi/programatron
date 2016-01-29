@@ -6,3 +6,11 @@ C:\Users\Tontu\documents\visual studio 2013\Projects\WindowsFormsApplication1\la
 C:\Users\Tontu\documents\visual studio 2013\Projects\WindowsFormsApplication1\languageVM\bin\Debug\iniPaster.dll
 C:\Users\Tontu\documents\visual studio 2013\Projects\WindowsFormsApplication1\languageVM\bin\Debug\iniPaster.pdb
 C:\Users\Tontu\documents\visual studio 2013\Projects\WindowsFormsApplication1\languageVM\bin\Debug\languageVM.exe.config
+D:\Repos\programatron\projects\languageVM\bin\Debug\languageVM.exe.config
+D:\Repos\programatron\projects\languageVM\obj\Debug\languageVM.exe
+D:\Repos\programatron\projects\languageVM\obj\Debug\languageVM.pdb
+D:\Repos\programatron\projects\languageVM\obj\Debug\languageVM.csprojResolveAssemblyReference.cache
+D:\Repos\programatron\projects\languageVM\bin\Debug\languageVM.exe
+D:\Repos\programatron\projects\languageVM\bin\Debug\languageVM.pdb
+D:\Repos\programatron\projects\languageVM\bin\Debug\iniPaster.dll
+D:\Repos\programatron\projects\languageVM\bin\Debug\iniPaster.pdb

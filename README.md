@@ -1,6 +1,6 @@
-# programatron
-This is a Programatron interpretator on C#.
-Programatron is lightweight C-like syntax programming language.
+# programmatron
+This is a Programmatron interpretator on C#.
+Programmatron is lightweight C-like syntax programming language.
 
 Features:
 -Not strongly typed

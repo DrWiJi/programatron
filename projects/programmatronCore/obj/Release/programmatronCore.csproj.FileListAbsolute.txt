@@ -1,0 +1,7 @@
+D:\Repos\programatron\projects\programmatronCore\obj\Release\programmatronCore.csprojResolveAssemblyReference.cache
+D:\Repos\programatron\projects\programmatronCore\bin\Release\ProgrammatronCore.dll
+D:\Repos\programatron\projects\programmatronCore\bin\Release\ProgrammatronCore.pdb
+D:\Repos\programatron\projects\programmatronCore\obj\Release\ProgrammatronCore.dll
+D:\Repos\programatron\projects\programmatronCore\obj\Release\ProgrammatronCore.pdb
+D:\Repos\programatron\projects\programmatronCore\bin\Release\FunctionsRealization.dll
+D:\Repos\programatron\projects\programmatronCore\bin\Release\FunctionsRealization.pdb

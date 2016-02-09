@@ -18,3 +18,4 @@ xxxx - code
 	0007 - wrong arguments count
 	0008 - missing function
 	0009 - invalid arguments
+	0010 - undefined argument

@@ -6,7 +6,8 @@ using System.IO;
 using programmatronCore;
 using testing;
 using testingDLL;
-using VMenvironment;
+using InterpretatorEnveronment;
+using System.Windows;
 
 namespace languageVM
 {
@@ -78,8 +79,8 @@ namespace languageVM
         static void applicationInitialize(string[] args)
         {
             fillVirtualMachineParameters(args);
-            VMenvironment.Environment.log = new Log();
-            VMenvironment.Environment.reporter = new Reporter();
+            InterpretatorEnveronment.Env.log = new Log();
+            InterpretatorEnveronment.Env.reporter = new Reporter();
         }
 
 #if DEBUG
@@ -88,7 +89,7 @@ namespace languageVM
         static void fillVirtualMachineParameters(string[] args)
 #endif
         {
-            //пересмотреть систему флагов на ПК платформе
+            //TO DO пересмотреть систему флагов
             Parameters.virtualMachineParameters.executableFilePath = getExecutableFilePathFromArgsOrDefault(args);
             Parameters.virtualMachineParameters.isDebug = getAvailabilityNormalFlagFromArgs("-debug",args);
             Parameters.virtualMachineParameters.isIgnoreWarnings = getAvailabilityNormalFlagFromArgs("-ignoreWarnings", args);

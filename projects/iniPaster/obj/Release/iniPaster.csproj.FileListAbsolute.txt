@@ -3,3 +3,8 @@ C:\Users\Tontu\Documents\Visual Studio 2013\Projects\WindowsFormsApplication1\in
 C:\Users\Tontu\Documents\Visual Studio 2013\Projects\WindowsFormsApplication1\iniPaster\obj\Release\iniPaster.csprojResolveAssemblyReference.cache
 C:\Users\Tontu\Documents\Visual Studio 2013\Projects\WindowsFormsApplication1\iniPaster\obj\Release\iniPaster.dll
 C:\Users\Tontu\Documents\Visual Studio 2013\Projects\WindowsFormsApplication1\iniPaster\obj\Release\iniPaster.pdb
+D:\Repos\programatron\projects\iniPaster\bin\Release\iniPaster.dll
+D:\Repos\programatron\projects\iniPaster\bin\Release\iniPaster.pdb
+D:\Repos\programatron\projects\iniPaster\obj\Release\iniPaster.csprojResolveAssemblyReference.cache
+D:\Repos\programatron\projects\iniPaster\obj\Release\iniPaster.dll
+D:\Repos\programatron\projects\iniPaster\obj\Release\iniPaster.pdb

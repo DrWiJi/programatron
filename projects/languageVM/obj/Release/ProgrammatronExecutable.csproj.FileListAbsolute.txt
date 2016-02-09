@@ -1,0 +1,12 @@
+D:\Repos\programatron\projects\languageVM\obj\Release\ProgrammatronExecutable.csprojResolveAssemblyReference.cache
+D:\Repos\programatron\projects\languageVM\bin\Release\iniPaster.dll
+D:\Repos\programatron\projects\languageVM\bin\Release\ProgrammatronCore.dll
+D:\Repos\programatron\projects\languageVM\bin\Release\iniPaster.pdb
+D:\Repos\programatron\projects\languageVM\bin\Release\ProgrammatronCore.pdb
+D:\Repos\programatron\projects\languageVM\bin\Release\ProgrammatronExecutable.exe.config
+D:\Repos\programatron\projects\languageVM\bin\Release\ProgrammatronExecutable.exe
+D:\Repos\programatron\projects\languageVM\bin\Release\ProgrammatronExecutable.pdb
+D:\Repos\programatron\projects\languageVM\obj\Release\ProgrammatronExecutable.exe
+D:\Repos\programatron\projects\languageVM\obj\Release\ProgrammatronExecutable.pdb
+D:\Repos\programatron\projects\languageVM\bin\Release\FunctionsRealization.dll
+D:\Repos\programatron\projects\languageVM\bin\Release\FunctionsRealization.pdb

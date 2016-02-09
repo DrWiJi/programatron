@@ -9,7 +9,7 @@ using programmatronCore;
 using System.Windows;
 using System.IO;
 
-namespace VMenvironment
+namespace InterpretatorEnveronment
 {
 
 

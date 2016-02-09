@@ -5,7 +5,7 @@ VisualStudioVersion = 12.0.30626.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "programmatronIDE", "WindowsFormsApplication1\programmatronIDE.csproj", "{64E764D3-08B0-48AB-A76B-4A9C28F1B0C3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "languageVM", "languageVM\languageVM.csproj", "{ADA142CA-89C5-459E-B44F-92E91158C6FB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProgrammatronExecutable", "languageVM\ProgrammatronExecutable.csproj", "{ADA142CA-89C5-459E-B44F-92E91158C6FB}"
 	ProjectSection(ProjectDependencies) = postProject
 		{AEC4CFAB-811B-4624-9B48-FB4F2450E05B} = {AEC4CFAB-811B-4624-9B48-FB4F2450E05B}
 	EndProjectSection
@@ -13,6 +13,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iniPaster", "iniPaster\iniPaster.csproj", "{AEC4CFAB-811B-4624-9B48-FB4F2450E05B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mobosiSema", "mobosiSema\mobosiSema.csproj", "{A31693D7-2B11-45FA-99C0-0A3D3A2FB611}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProgrammatronCore", "programmatronCore\ProgrammatronCore.csproj", "{E640AE3F-DFA9-4EBA-82C7-A9ABAF783882}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunctionsRealization", "FunctionsRealization\FunctionsRealization.csproj", "{FB8298C0-2FF0-4859-B9B6-D8C8CCDACA42}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -66,6 +70,22 @@ Global
 		{A31693D7-2B11-45FA-99C0-0A3D3A2FB611}.Release|x86.ActiveCfg = Release|x86
 		{A31693D7-2B11-45FA-99C0-0A3D3A2FB611}.Release|x86.Build.0 = Release|x86
 		{A31693D7-2B11-45FA-99C0-0A3D3A2FB611}.Release|x86.Deploy.0 = Release|x86
+		{E640AE3F-DFA9-4EBA-82C7-A9ABAF783882}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E640AE3F-DFA9-4EBA-82C7-A9ABAF783882}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E640AE3F-DFA9-4EBA-82C7-A9ABAF783882}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{E640AE3F-DFA9-4EBA-82C7-A9ABAF783882}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E640AE3F-DFA9-4EBA-82C7-A9ABAF783882}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E640AE3F-DFA9-4EBA-82C7-A9ABAF783882}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E640AE3F-DFA9-4EBA-82C7-A9ABAF783882}.Release|ARM.ActiveCfg = Release|Any CPU
+		{E640AE3F-DFA9-4EBA-82C7-A9ABAF783882}.Release|x86.ActiveCfg = Release|Any CPU
+		{FB8298C0-2FF0-4859-B9B6-D8C8CCDACA42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB8298C0-2FF0-4859-B9B6-D8C8CCDACA42}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB8298C0-2FF0-4859-B9B6-D8C8CCDACA42}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{FB8298C0-2FF0-4859-B9B6-D8C8CCDACA42}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{FB8298C0-2FF0-4859-B9B6-D8C8CCDACA42}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB8298C0-2FF0-4859-B9B6-D8C8CCDACA42}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB8298C0-2FF0-4859-B9B6-D8C8CCDACA42}.Release|ARM.ActiveCfg = Release|Any CPU
+		{FB8298C0-2FF0-4859-B9B6-D8C8CCDACA42}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

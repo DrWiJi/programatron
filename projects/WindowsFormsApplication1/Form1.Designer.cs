@@ -32,8 +32,6 @@
             this.sourceCodeBox = new System.Windows.Forms.TextBox();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.logListBox = new System.Windows.Forms.ListBox();
-            this.outTextBox = new System.Windows.Forms.TextBox();
-            this.inTextBox = new System.Windows.Forms.TextBox();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.newToolButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
@@ -54,15 +52,15 @@
             this.sourceCodeBox.Multiline = true;
             this.sourceCodeBox.Name = "sourceCodeBox";
             this.sourceCodeBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.sourceCodeBox.Size = new System.Drawing.Size(622, 215);
+            this.sourceCodeBox.Size = new System.Drawing.Size(760, 180);
             this.sourceCodeBox.TabIndex = 0;
             this.sourceCodeBox.TextChanged += new System.EventHandler(this.sourceCodeBox_TextChanged);
             // 
             // statusStrip1
             // 
-            this.statusStrip1.Location = new System.Drawing.Point(0, 337);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 302);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(925, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(784, 22);
             this.statusStrip1.TabIndex = 1;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -71,32 +69,10 @@
             this.logListBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.logListBox.FormattingEnabled = true;
-            this.logListBox.Location = new System.Drawing.Point(12, 253);
+            this.logListBox.Location = new System.Drawing.Point(12, 218);
             this.logListBox.Name = "logListBox";
-            this.logListBox.Size = new System.Drawing.Size(622, 82);
+            this.logListBox.Size = new System.Drawing.Size(760, 82);
             this.logListBox.TabIndex = 2;
-            // 
-            // outTextBox
-            // 
-            this.outTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.outTextBox.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.outTextBox.Location = new System.Drawing.Point(640, 30);
-            this.outTextBox.Multiline = true;
-            this.outTextBox.Name = "outTextBox";
-            this.outTextBox.ReadOnly = true;
-            this.outTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.outTextBox.Size = new System.Drawing.Size(273, 279);
-            this.outTextBox.TabIndex = 3;
-            // 
-            // inTextBox
-            // 
-            this.inTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.inTextBox.Location = new System.Drawing.Point(640, 314);
-            this.inTextBox.Name = "inTextBox";
-            this.inTextBox.Size = new System.Drawing.Size(273, 20);
-            this.inTextBox.TabIndex = 4;
-            this.inTextBox.TextChanged += new System.EventHandler(this.inTextBox_TextChanged);
             // 
             // toolStrip1
             // 
@@ -110,7 +86,7 @@
             this.toolStripButton5});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(925, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(784, 25);
             this.toolStrip1.TabIndex = 5;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -173,14 +149,12 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(925, 359);
+            this.ClientSize = new System.Drawing.Size(784, 324);
             this.Controls.Add(this.toolStrip1);
-            this.Controls.Add(this.inTextBox);
-            this.Controls.Add(this.outTextBox);
             this.Controls.Add(this.logListBox);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.sourceCodeBox);
-            this.MinimumSize = new System.Drawing.Size(920, 363);
+            this.MinimumSize = new System.Drawing.Size(800, 363);
             this.Name = "MainWindow";
             this.Text = "Программатрон";
             this.toolStrip1.ResumeLayout(false);
@@ -195,8 +169,6 @@
         private System.Windows.Forms.TextBox sourceCodeBox;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ListBox logListBox;
-        private System.Windows.Forms.TextBox outTextBox;
-        private System.Windows.Forms.TextBox inTextBox;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton newToolButton;
         private System.Windows.Forms.ToolStripButton toolStripButton2;

@@ -15,7 +15,12 @@ namespace FunctionsList
 
     public class Functions
     {
-        public static List<FunctionTemplate> Storage = new List<FunctionTemplate> { new WriteStrFunc(), new ReadFunc()};
+        public static List<FunctionTemplate> Storage = new List<FunctionTemplate> { 
+            new WriteStrFunc(), 
+            new ReadFunc(),
+            new ReadSymbolFunc(),
+            new WriteFunc()
+        };
 
         public static FunctionResult CallFunction(List<FunctionArgument> args,String name)
         {

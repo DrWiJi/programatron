@@ -103,10 +103,56 @@ namespace FunctionsList
                 throw new WrongArgumentCountException("Функция ввод() не принимает нуль аргументов");
             foreach(FunctionArgument arg in args)
             {
+                String readOut = Console.ReadLine();
                 if (Variables.Storage.ContainsKey(arg.argument))
-                    Variables.Storage[arg.argument] = Console.ReadLine();
+                {
+                    if (isNumber(readOut))
+                        Variables.Storage[arg.argument] = readOut;
+                    else
+                        Variables.Storage[arg.argument] = "\"" + readOut + "\"";
+                }
                 else
                     throw new UndefinedVariableException("Не определена в текущей области видимости переменная " + arg.argument);
+            }
+            return Result;
+        }
+    }
+    public class ReadSymbolFunc:FunctionTemplate
+    {
+        public ReadSymbolFunc()
+            : base()
+        {
+            Name = "вводСимвола";
+            String descr = "Ввод с клавиатуры одного символа, представление в числовом эквиваленте и присвоение его переменной; Символ представлен в числовом эквиваленте";
+            ConsoleKey key=ConsoleKey.A;
+            Array enumArr = key.GetType().GetEnumValues();
+            int i=8;
+            foreach(Object cur in enumArr)
+            {
+                descr += "\r\n" + cur.ToString() + "\t\t" + i;
+                i++;
+            }
+            Info = new FunctionHelpInfo("Ввод/вывод", ValueTypeEnum.None, "arg0 только переменные", descr,
+                new List<ArgumentPrototypeInfo> { new ArgumentPrototypeInfo("", false, false, false, true, false) });
+            Result = new FunctionResult();
+            Result.ResultTypeEnum = ValueTypeEnum.None;
+        }
+
+        public override FunctionResult execute(List<FunctionArgument> args)
+        {
+            if (args.Count == 0)
+                throw new WrongArgumentCountException("Функция вводСимвола() не принимает нуль аргументов");
+            foreach(FunctionArgument arg in args)
+            {
+                String readOut = Console.ReadKey().Key.GetHashCode().ToString();
+                if (Variables.Storage.ContainsKey(arg.argument))
+                {
+                    Variables.Storage[arg.argument] = readOut;
+                }
+                else
+                    throw new UndefinedVariableException("Не определена в текущей области видимости переменная " + arg.argument);
+                Console.WriteLine();
+
             }
             return Result;
         }

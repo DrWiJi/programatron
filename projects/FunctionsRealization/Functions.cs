@@ -22,7 +22,7 @@ namespace FunctionsList
         public override FunctionResult execute(List<FunctionArgument> args)
         {
             if (args.Count == 0)
-                throw new WrongArgumentCountException("Функция не принимает нуль аргументов");
+                throw new WrongArgumentCountException("Функция выводСтрокой() не принимает нуль аргументов");
             foreach (FunctionArgument arg in args)
             {
                 if(isString(arg.argument))
@@ -39,6 +39,45 @@ namespace FunctionsList
                         Console.WriteLine(Variables.Storage[arg.argument]);
                 }
                 else 
+                    throw new UndefinedVariableException("Необявленная переменная " + arg.argument + ", либо не существует в данной области видимости");
+            }
+            return Result;
+        }
+
+
+    }
+    public class WriteFunc : FunctionTemplate
+    {
+        public WriteFunc()
+            : base()
+        {
+            Name = "вывод";
+            Info = new FunctionHelpInfo("Ввод/вывод", ValueTypeEnum.None, "arg1,arg2,arg3,...", "Выводит в консоль все аргументы в текстовом представлении. Каждый аргумент выводится с новой строки.",
+                new List<ArgumentPrototypeInfo> { new ArgumentPrototypeInfo("Any", true, true, true, true, false) });
+            Result = new FunctionResult();
+            Result.ResultTypeEnum = ValueTypeEnum.None;
+        }
+
+        public override FunctionResult execute(List<FunctionArgument> args)
+        {
+            if (args.Count == 0)
+                throw new WrongArgumentCountException("Функция вывод() не принимает нуль аргументов");
+            foreach (FunctionArgument arg in args)
+            {
+                if (isString(arg.argument))
+                    Console.Write(getStringVariableWithoutQuotes(arg.argument));
+                else if (isNumber(arg.argument))
+                    Console.Write(arg.argument);
+                else if (!isIdentifier(arg.argument))
+                    throw new WrongFormatArgumentException("Неверный формат входного аргумента " + arg.argument);
+                else if (Variables.Storage.ContainsKey(arg.argument))
+                {
+                    if (isString(Variables.Storage[arg.argument]))
+                        Console.Write(getStringVariableWithoutQuotes(Variables.Storage[arg.argument]));
+                    else
+                        Console.Write(Variables.Storage[arg.argument]);
+                }
+                else
                     throw new UndefinedVariableException("Необявленная переменная " + arg.argument + ", либо не существует в данной области видимости");
             }
             return Result;

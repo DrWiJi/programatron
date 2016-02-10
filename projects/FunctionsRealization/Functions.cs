@@ -13,7 +13,7 @@ namespace FunctionsList
             : base()
         {
             Name = "выводСтрокой";
-            Info = new FunctionHelpInfo("Ввод/вывод", ValueTypeEnum.None, "arg1,arg2,arg3,...", "Выводит в консоль все аргументы в текстовом представлении. Каждый аргумент выводится с новой строки.", 
+            Info = new FunctionHelpInfo("Ввод/вывод", ValueTypeEnum.None, "arg1,arg2,arg3,...", "\\par\tВыводит в консоль все аргументы в текстовом представлении. Каждый аргумент выводится с новой строки.", 
                 new List<ArgumentPrototypeInfo> { new ArgumentPrototypeInfo("Any",true,true,true,true,false)});
             Result = new FunctionResult();
             Result.ResultTypeEnum = ValueTypeEnum.None;
@@ -52,7 +52,7 @@ namespace FunctionsList
             : base()
         {
             Name = "вывод";
-            Info = new FunctionHelpInfo("Ввод/вывод", ValueTypeEnum.None, "arg1,arg2,arg3,...", "Выводит в консоль все аргументы в текстовом представлении. Каждый аргумент выводится с новой строки.",
+            Info = new FunctionHelpInfo("Ввод/вывод", ValueTypeEnum.None, "arg1,arg2,arg3,...", "\\par\tВыводит в консоль все аргументы в текстовом представлении. Каждый аргумент выводится с новой строки.",
                 new List<ArgumentPrototypeInfo> { new ArgumentPrototypeInfo("Any", true, true, true, true, false) });
             Result = new FunctionResult();
             Result.ResultTypeEnum = ValueTypeEnum.None;
@@ -91,7 +91,7 @@ namespace FunctionsList
         public ReadFunc():base()
         {
             Name = "ввод";
-            Info = new FunctionHelpInfo("Ввод/вывод", ValueTypeEnum.None, "arg0,arg1,arg2,arg3,... только переменные", "Ввод с клавиатуры значений и присвоение этих значений переменным; Всегда в порядке слева направо.",
+            Info = new FunctionHelpInfo("Ввод/вывод", ValueTypeEnum.None, "arg0,arg1,arg2,arg3,... только переменные", "\\par\tВвод с клавиатуры значений и присвоение этих значений переменным. Присвоение аргументам значений производится всегда слева направо.",
                 new List<ArgumentPrototypeInfo> { new ArgumentPrototypeInfo("", true, false, false, true, false) });
             Result = new FunctionResult();
             Result.ResultTypeEnum = ValueTypeEnum.None;
@@ -123,13 +123,13 @@ namespace FunctionsList
             : base()
         {
             Name = "вводСимвола";
-            String descr = "Ввод с клавиатуры одного символа, представление в числовом эквиваленте и присвоение его переменной; Символ представлен в числовом эквиваленте";
+            String descr = "\\par\tВвод с клавиатуры одного символа, представление в числовом эквиваленте и присвоение его переменной; \\par\\parТаблица эквивалентов клавиш\\par";
             ConsoleKey key=ConsoleKey.A;
             Array enumArr = key.GetType().GetEnumValues();
             int i=8;
             foreach(Object cur in enumArr)
             {
-                descr += "\r\n" + cur.ToString() + "\t\t" + i;
+                descr += "\\trowd\\cellx2000\\cellx4000\\intbl  " + cur.ToString() + "\\cell\\intbl  " + i+"\\cell\\row";
                 i++;
             }
             Info = new FunctionHelpInfo("Ввод/вывод", ValueTypeEnum.None, "arg0 только переменные", descr,

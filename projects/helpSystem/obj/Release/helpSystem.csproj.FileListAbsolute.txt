@@ -1,0 +1,10 @@
+D:\Repos\programatron\projects\helpSystem\bin\Release\helpSystem.exe
+D:\Repos\programatron\projects\helpSystem\bin\Release\helpSystem.pdb
+D:\Repos\programatron\projects\helpSystem\bin\Release\FunctionsRealization.dll
+D:\Repos\programatron\projects\helpSystem\bin\Release\FunctionsRealization.pdb
+D:\Repos\programatron\projects\helpSystem\obj\Release\helpSystem.csprojResolveAssemblyReference.cache
+D:\Repos\programatron\projects\helpSystem\obj\Release\helpSystem.helpSystemWindow.resources
+D:\Repos\programatron\projects\helpSystem\obj\Release\helpSystem.Properties.Resources.resources
+D:\Repos\programatron\projects\helpSystem\obj\Release\helpSystem.csproj.GenerateResource.Cache
+D:\Repos\programatron\projects\helpSystem\obj\Release\helpSystem.exe
+D:\Repos\programatron\projects\helpSystem\obj\Release\helpSystem.pdb

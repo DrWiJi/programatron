@@ -74,6 +74,8 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Resources\Описание синтаксиса языка Программатрон.rtf" />
+    <None Include="Resources\Переменные.rtf" />
     <None Include="Resources\Система помощи по языку Программатрон и его окружению.rtf" />
     <None Include="Resources\Справка по языку Программатрон.docx" />
     <None Include="Resources\Справка по языку Программатрон.rtf" />

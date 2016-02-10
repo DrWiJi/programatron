@@ -54,6 +54,14 @@ namespace helpSystem
             {
                 HelpMonitorRichTextBox.Rtf = Properties.Resources.Справка_по_языку_Программатрон;
             }
+            else if (HelpGroupsTreeView.SelectedNode.Name == "VariablesNode")
+            {
+                HelpMonitorRichTextBox.Rtf = Properties.Resources.Переменные;
+            }
+            else if (HelpGroupsTreeView.SelectedNode.Name == "IntroNode")
+            {
+                HelpMonitorRichTextBox.Rtf = Properties.Resources.Описание_синтаксиса_языка_Программатрон;
+            }
             else
             {
                 HelpMonitorRichTextBox.Rtf = "{\\rtf1\\ansi\\ansicpg1251\\deff0\\deflang1049{\\fonttbl{\\f0\\fnil\\fcharset204 Microsoft Sans Serif;}}\\viewkind4\\uc1\\pard\\f0\\fs17{\\fs15 Нет описания}}";

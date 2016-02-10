@@ -65,6 +65,27 @@ namespace helpSystem.Properties {
         ///{\f0\fbidi \froman\fcharset204\fprq2{\*\panose 02020603050405020304}Times New Roman;}{\f42\fbidi \fswiss\fcharset204\fprq2{\*\panose 020b0604020202020204}Microsoft Sans Serif;}
         ///{\flomajor\f31500\fbidi \froman\fcharset204\fprq2{\*\panose 02020603050405020 [остаток строки не уместился]&quot;;.
         /// </summary>
+        internal static string Описание_синтаксиса_языка_Программатрон {
+            get {
+                return ResourceManager.GetString("Описание_синтаксиса_языка_Программатрон", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на {\rtf1\adeflang1025\ansi\ansicpg1251\uc1\adeff0\deff0\stshfdbch31506\stshfloch0\stshfhich0\stshfbi0\deflang1049\deflangfe1049\themelang1049\themelangfe0\themelangcs0{\fonttbl{\f0\fbidi \froman\fcharset204\fprq2{\*\panose 02020603050405020304}Times New Roman;}
+        ///{\f0\fbidi \froman\fcharset204\fprq2{\*\panose 02020603050405020304}Times New Roman;}{\f37\fbidi \fswiss\fcharset204\fprq2{\*\panose 020f0502020204030204}Calibri;}{\f42\fbidi \fswiss\fcharset204\fprq2{\*\panose 020b0604020202020204}Microsoft Sans Seri [остаток строки не уместился]&quot;;.
+        /// </summary>
+        internal static string Переменные {
+            get {
+                return ResourceManager.GetString("Переменные", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на {\rtf1\adeflang1025\ansi\ansicpg1251\uc1\adeff0\deff0\stshfdbch0\stshfloch0\stshfhich0\stshfbi0\deflang1049\deflangfe1049\themelang1049\themelangfe0\themelangcs0{\fonttbl{\f0\fbidi \froman\fcharset204\fprq2{\*\panose 02020603050405020304}Times New Roman;}
+        ///{\f0\fbidi \froman\fcharset204\fprq2{\*\panose 02020603050405020304}Times New Roman;}{\f42\fbidi \fswiss\fcharset204\fprq2{\*\panose 020b0604020202020204}Microsoft Sans Serif;}
+        ///{\flomajor\f31500\fbidi \froman\fcharset204\fprq2{\*\panose 02020603050405020 [остаток строки не уместился]&quot;;.
+        /// </summary>
         internal static string Система_помощи_по_языку_Программатрон_и_его_окружению {
             get {
                 return ResourceManager.GetString("Система_помощи_по_языку_Программатрон_и_его_окружению", resourceCulture);

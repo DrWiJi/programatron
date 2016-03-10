@@ -1,0 +1,4 @@
+D:\Repos\programatron\projects\SerializableClasses\bin\Debug\SerializableClasses.dll
+D:\Repos\programatron\projects\SerializableClasses\bin\Debug\SerializableClasses.pdb
+D:\Repos\programatron\projects\SerializableClasses\obj\Debug\SerializableClasses.dll
+D:\Repos\programatron\projects\SerializableClasses\obj\Debug\SerializableClasses.pdb

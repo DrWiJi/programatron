@@ -1,4 +1,4 @@
-﻿namespace WindowsFormsApplication1
+﻿namespace ProgrammatronIDE
 {
     partial class MainWindow
     {
@@ -157,6 +157,7 @@
             this.MinimumSize = new System.Drawing.Size(800, 363);
             this.Name = "MainWindow";
             this.Text = "Программатрон";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainWindow_FormClosed);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);

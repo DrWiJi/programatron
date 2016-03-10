@@ -62,6 +62,10 @@ namespace helpSystem
             {
                 HelpMonitorRichTextBox.Rtf = Properties.Resources.Описание_синтаксиса_языка_Программатрон;
             }
+            else if (HelpGroupsTreeView.SelectedNode.Name == "TypesAndDataNode")
+            {
+                HelpMonitorRichTextBox.Rtf = Properties.Resources.Типы_данных_и_работа_с_данными;
+            }
             else
             {
                 HelpMonitorRichTextBox.Rtf = "{\\rtf1\\ansi\\ansicpg1251\\deff0\\deflang1049{\\fonttbl{\\f0\\fnil\\fcharset204 Microsoft Sans Serif;}}\\viewkind4\\uc1\\pard\\f0\\fs17{\\fs15 Нет описания}}";

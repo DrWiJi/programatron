@@ -7,3 +7,12 @@ C:\Users\Tontu\documents\visual studio 2013\Projects\WindowsFormsApplication1\Wi
 C:\Users\Tontu\documents\visual studio 2013\Projects\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.exe
 C:\Users\Tontu\documents\visual studio 2013\Projects\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.pdb
 C:\Users\Tontu\documents\visual studio 2013\Projects\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe.config
+D:\Repos\programatron\projects\WindowsFormsApplication1\bin\Debug\ProgrammatronIDE.exe.config
+D:\Repos\programatron\projects\WindowsFormsApplication1\bin\Debug\ProgrammatronIDE.exe
+D:\Repos\programatron\projects\WindowsFormsApplication1\bin\Debug\ProgrammatronIDE.pdb
+D:\Repos\programatron\projects\WindowsFormsApplication1\obj\Debug\programmatronIDE.csprojResolveAssemblyReference.cache
+D:\Repos\programatron\projects\WindowsFormsApplication1\obj\Debug\ProgrammatronIDE.MainWindow.resources
+D:\Repos\programatron\projects\WindowsFormsApplication1\obj\Debug\ProgrammatronIDE.Properties.Resources.resources
+D:\Repos\programatron\projects\WindowsFormsApplication1\obj\Debug\programmatronIDE.csproj.GenerateResource.Cache
+D:\Repos\programatron\projects\WindowsFormsApplication1\obj\Debug\ProgrammatronIDE.exe
+D:\Repos\programatron\projects\WindowsFormsApplication1\obj\Debug\ProgrammatronIDE.pdb

@@ -101,5 +101,16 @@ namespace helpSystem.Properties {
                 return ResourceManager.GetString("Справка_по_языку_Программатрон", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на {\rtf1\adeflang1025\ansi\ansicpg1251\uc1\adeff0\deff0\stshfdbch0\stshfloch0\stshfhich0\stshfbi0\deflang1049\deflangfe1049\themelang1049\themelangfe0\themelangcs0{\fonttbl{\f0\fbidi \froman\fcharset204\fprq2{\*\panose 02020603050405020304}Times New Roman;}
+        ///{\f0\fbidi \froman\fcharset204\fprq2{\*\panose 02020603050405020304}Times New Roman;}{\f39\fbidi \fswiss\fcharset204\fprq2{\*\panose 00000000000000000000}Microsoft Sans Serif;}
+        ///{\flomajor\f31500\fbidi \froman\fcharset204\fprq2{\*\panose 02020603050405020 [остаток строки не уместился]&quot;;.
+        /// </summary>
+        internal static string Типы_данных_и_работа_с_данными {
+            get {
+                return ResourceManager.GetString("Типы_данных_и_работа_с_данными", resourceCulture);
+            }
+        }
     }
 }

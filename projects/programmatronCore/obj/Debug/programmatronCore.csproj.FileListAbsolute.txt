@@ -3,3 +3,5 @@ C:\Users\Tontu\documents\visual studio 2013\Projects\WindowsFormsApplication1\pr
 C:\Users\Tontu\documents\visual studio 2013\Projects\WindowsFormsApplication1\programmatronCore\bin\Debug\programmatronCore.pdb
 C:\Users\Tontu\documents\visual studio 2013\Projects\WindowsFormsApplication1\programmatronCore\obj\Debug\programmatronCore.dll
 C:\Users\Tontu\documents\visual studio 2013\Projects\WindowsFormsApplication1\programmatronCore\obj\Debug\programmatronCore.pdb
+D:\Repos\programatron\projects\programmatronCore\obj\Debug\ProgrammatronCore.csprojResolveAssemblyReference.cache
+D:\Repos\programatron\projects\programmatronCore\obj\Debug\ProgrammatronCore.dll

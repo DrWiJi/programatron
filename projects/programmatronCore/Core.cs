@@ -946,7 +946,14 @@ namespace programmatronCore
 		
 		public void doCode()
 		{
-		    doProcessing(headOfSyntaxTree);
+            try
+            {
+                doProcessing(headOfSyntaxTree);
+            }
+            catch(Exception ex)
+            {
+                InterpretatorEnveronment.Env.log.message("Исправьте указанную ошибку, затем снова запустите");
+            }
 		}
 		
 		/// <summary>
@@ -995,7 +1002,8 @@ namespace programmatronCore
             }
             catch(Exception ex)
             {
-                InterpretatorEnveronment.Env.log.message("Выполнение прервано");
+                InterpretatorEnveronment.Env.log.message("Выполнение прервано на этапе обработки "+workingTerm.Type.ToString());
+                throw ex;
             }
 		}
 		
@@ -1029,16 +1037,20 @@ namespace programmatronCore
             }catch (WrongArgumentCountException ex)
             {
                 Env.reporter.describeError(ex.Message, 100100007, term.Name.StringNumber, "Неверное количество аргументов");
+                throw ex;
             }catch(WrongFormatArgumentException ex)
             {
                 Env.reporter.describeError(ex.Message, 100100009, term.Name.StringNumber, "Неверный формат аргументов");
+                throw ex;
             }catch(UndefinedVariableException ex)
             {
                 Env.reporter.describeError(ex.Message, 100100010, term.Name.StringNumber, "Не определена переменная");
+                throw ex;
             }
             catch(NotImplementedException ex)
             {
 		        InterpretatorEnveronment.Env.reporter.describeError(ex.Message,100100008,term.Name.StringNumber,"Несуществующая функция");
+                throw ex;
 		    }
             catch(Exception ex)
             {

@@ -32,10 +32,12 @@
             System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Базовые функции");
             System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Введение");
             System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Переменные");
-            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Язык", new System.Windows.Forms.TreeNode[] {
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Типы и данные");
+            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Язык", new System.Windows.Forms.TreeNode[] {
             treeNode2,
             treeNode3,
-            treeNode4});
+            treeNode4,
+            treeNode5});
             this.HelpGroupsTreeView = new System.Windows.Forms.TreeView();
             this.label1 = new System.Windows.Forms.Label();
             this.HelpMonitorRichTextBox = new System.Windows.Forms.RichTextBox();
@@ -64,12 +66,14 @@
             treeNode3.Text = "Введение";
             treeNode4.Name = "VariablesNode";
             treeNode4.Text = "Переменные";
-            treeNode5.Name = "ProgrammingNode";
-            treeNode5.Text = "Язык";
-            treeNode5.ToolTipText = "Описания, помощь в использовании данной системы";
+            treeNode5.Name = "TypesAndDataNode";
+            treeNode5.Text = "Типы и данные";
+            treeNode6.Name = "ProgrammingNode";
+            treeNode6.Text = "Язык";
+            treeNode6.ToolTipText = "Описания, помощь в использовании данной системы";
             this.HelpGroupsTreeView.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
             treeNode1,
-            treeNode5});
+            treeNode6});
             this.HelpGroupsTreeView.Size = new System.Drawing.Size(233, 287);
             this.HelpGroupsTreeView.TabIndex = 0;
             this.HelpGroupsTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);

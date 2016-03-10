@@ -1,0 +1,5 @@
+D:\Repos\programatron\projects\FunctionsRealization\bin\Debug\FunctionsRealization.dll
+D:\Repos\programatron\projects\FunctionsRealization\bin\Debug\FunctionsRealization.pdb
+D:\Repos\programatron\projects\FunctionsRealization\obj\Debug\FunctionsRealization.csprojResolveAssemblyReference.cache
+D:\Repos\programatron\projects\FunctionsRealization\obj\Debug\FunctionsRealization.dll
+D:\Repos\programatron\projects\FunctionsRealization\obj\Debug\FunctionsRealization.pdb

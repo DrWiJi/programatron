@@ -1,0 +1,5 @@
+D:\Repos\programatron\projects\SerializableClasses\bin\Release\SerializableClasses.dll
+D:\Repos\programatron\projects\SerializableClasses\bin\Release\SerializableClasses.pdb
+D:\Repos\programatron\projects\SerializableClasses\obj\Release\SerializableClasses.dll
+D:\Repos\programatron\projects\SerializableClasses\obj\Release\SerializableClasses.pdb
+D:\Repos\programatron\projects\SerializableClasses\obj\Release\SerializableClasses.csprojResolveAssemblyReference.cache

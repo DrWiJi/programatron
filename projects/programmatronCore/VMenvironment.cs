@@ -27,7 +27,7 @@ namespace InterpretatorEnveronment
         public Log()
         {
             initialize();
-            if (Parameters.virtualMachineParameters.isDebug)
+            if (Parameters.InterParameters.isDebug)
                 tryConnectToIDE();
         }
 
@@ -95,7 +95,7 @@ namespace InterpretatorEnveronment
 
         private void sendToLog()
         {
-            if(Parameters.virtualMachineParameters.isSaveReports)
+            if(Parameters.InterParameters.isSaveReports)
             {
                 logFileStream.Write(DateTime.Now.ToString() + " ");
                 if (currentTitle.Length != 0)
@@ -109,7 +109,7 @@ namespace InterpretatorEnveronment
 
         private void sendToIDEFormatedMessage(String message)
         {
-            if(Parameters.virtualMachineParameters.isDebug && logPipe.IsConnected)
+            if(Parameters.InterParameters.isDebug && logPipe.IsConnected)
             {
                 using(StreamWriter writer = new StreamWriter(logPipe))
                 {

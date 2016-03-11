@@ -20,19 +20,19 @@ namespace programmatronCore
 	
 	public class Parameters
 	{
-		public static virtualMachineParameters virtualMachineParameters;
-		public static String PRODUCTFULLNAME = "Programmatron Interpretator(C) Alexeev Sergey, Volgograd 2015";
-		public static String PRODUCTVERSION = "Alpha 0.2.3";
+		public static InterpretatorParameters InterParameters;
+		public static String PRODUCTFULLNAME = "Programmatron Interpretator(C) Alexeev Sergey, Volgograd 2015-2016";
+		public static String PRODUCTVERSION = "Alpha 0.3.0";
 	}
 	
-	public struct virtualMachineParameters
+	public struct InterpretatorParameters
 	{
 		public String executableFilePath;
 		public bool isDebug;
 		public bool isIgnoreWarnings;
 		public bool isSaveReports;
 		
-		public virtualMachineParameters(string executableFilePath, bool debugMode, bool ignoreWarnings, bool saveReports)
+		public InterpretatorParameters(string executableFilePath, bool debugMode, bool ignoreWarnings, bool saveReports)
 		{
 		    this.executableFilePath = executableFilePath;
 		    this.isSaveReports = saveReports;
@@ -45,12 +45,12 @@ namespace programmatronCore
 		    return executableFilePath + " Debug: " + isDebug.ToString() + " Ignore Warnings: " + isIgnoreWarnings.ToString() + " Save Reports: " + isSaveReports.ToString();
 		}
 		
-		public static bool operator==(virtualMachineParameters a, virtualMachineParameters b)
+		public static bool operator==(InterpretatorParameters a, InterpretatorParameters b)
 		{
 		    return a.isDebug == b.isDebug && a.isIgnoreWarnings == b.isIgnoreWarnings && a.isSaveReports == b.isSaveReports && a.executableFilePath == b.executableFilePath;
 		}
 		
-		public static bool operator!=(virtualMachineParameters a, virtualMachineParameters b)
+		public static bool operator!=(InterpretatorParameters a, InterpretatorParameters b)
 		{
 		    return !(a==b);
 		}

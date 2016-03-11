@@ -33,17 +33,18 @@ namespace languageVM
 #else
             applicationInitialize(args);
             Console.WriteLine("ЗАПУСК");
-            if (Parameters.virtualMachineParameters.executableFilePath!=null&&File.Exists(Parameters.virtualMachineParameters.executableFilePath))
+            if (Parameters.InterParameters.executableFilePath!=null&&File.Exists(Parameters.InterParameters.executableFilePath))
             {
                 executeCode(getSourceCode());
             }
             else
             {
+                Console.WriteLine(Parameters.InterParameters.executableFilePath);
                 Console.WriteLine("!!! Указанный файл не существует или вовсе не был указан. !!!");
                 Console.WriteLine("Попытка открытия стандартного расположения...");
                 if(File.Exists(Constants.defaultExecuteFilePath))
                 {
-                    Parameters.virtualMachineParameters.executableFilePath = Constants.defaultExecuteFilePath;
+                    Parameters.InterParameters.executableFilePath = Constants.defaultExecuteFilePath;
                     executeCode(getSourceCode());
                 }
                 else
@@ -57,6 +58,7 @@ namespace languageVM
 
         static void executeCode(String code)
         {
+            Console.Clear();
             LexemAnalyzer sa = new LexemAnalyzer(code);
             List<Lexem> list = sa.analize();
             SyntaxTreeGenerator gen = new SyntaxTreeGenerator(list);
@@ -69,7 +71,7 @@ namespace languageVM
         static String getSourceCode()
         {
             String result = "";
-            using (StreamReader reader = new StreamReader(Parameters.virtualMachineParameters.executableFilePath,Encoding.Default))
+            using (StreamReader reader = new StreamReader(Parameters.InterParameters.executableFilePath,Encoding.Default))
             {
                 result = reader.ReadToEnd();
             }
@@ -78,7 +80,7 @@ namespace languageVM
 
         static void applicationInitialize(string[] args)
         {
-            fillVirtualMachineParameters(args);
+            fillInterpretatorParameters(args);
             InterpretatorEnveronment.Env.log = new Log();
             InterpretatorEnveronment.Env.reporter = new Reporter();
         }
@@ -86,31 +88,26 @@ namespace languageVM
 #if DEBUG
         public static void fillVirtualMachineParameters(string[] args)
 #else
-        static void fillVirtualMachineParameters(string[] args)
+        static void fillInterpretatorParameters(string[] args)
 #endif
         {
             //TO DO пересмотреть систему флагов
-            Parameters.virtualMachineParameters.executableFilePath = getExecutableFilePathFromArgsOrDefault(args);
-            Parameters.virtualMachineParameters.isDebug = getAvailabilityNormalFlagFromArgs("-debug",args);
-            Parameters.virtualMachineParameters.isIgnoreWarnings = getAvailabilityNormalFlagFromArgs("-ignoreWarnings", args);
-            Parameters.virtualMachineParameters.isSaveReports = getAvailabilityNormalFlagFromArgs("-saveReports", args);
+            Parameters.InterParameters.executableFilePath = getExecutableFilePathFromArgsOrDefault(args);
+            Parameters.InterParameters.isDebug = getAvailabilityNormalFlagFromArgs("-debug",args);
+            Parameters.InterParameters.isIgnoreWarnings = getAvailabilityNormalFlagFromArgs("-ignoreWarnings", args);
+            Parameters.InterParameters.isSaveReports = getAvailabilityNormalFlagFromArgs("-saveReports", args);
         }
 
         static String getExecutableFilePathFromArgsOrDefault(string[] args)
         {
-            if(args.Length>=1&&checkArgumentLikeFilePath(args[0]))
+            foreach(String cur in args)
             {
-                return args[0];
+                if(File.Exists(cur)&&Path.GetExtension(cur)==".pgt")
+                {
+                    return cur;
+                }
             }
-            else
-            {
-                return Constants.defaultExecuteFilePath;
-            }
-        }
-
-        static bool checkArgumentLikeFilePath(String argument)
-        {
-            return File.Exists(argument);
+            return Constants.defaultExecuteFilePath;
         }
 
         static bool getAvailabilityNormalFlagFromArgs(String flagName, string[] args)

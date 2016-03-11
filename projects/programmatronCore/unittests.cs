@@ -10,7 +10,7 @@ namespace testing
     public class ProgramTester
     {
         List<string[]> argumentsParsingTestStrings;
-        List<virtualMachineParameters> argumentsParsingTestStructs;
+        List<InterpretatorParameters> argumentsParsingTestStructs;
         public ProgramTester()
         {
             argumentsParsingTestStrings = new List<string[]>
@@ -20,12 +20,12 @@ namespace testing
                 new string[]{"test.exe","-ignoreWarnings","sdgsdgsdg","-debug","-saveReports"},//по идее должно сработать, путь по умолчанию, аргумент все равно есть
                 new string[]{"test.exe","sdgsdg","sdgggsd","der","-saveReports"}
             };
-            argumentsParsingTestStructs = new List<virtualMachineParameters>
+            argumentsParsingTestStructs = new List<InterpretatorParameters>
             {
-                new virtualMachineParameters("sdgsdgsdgsdgsdg.sdf",true,false,false),
-                new virtualMachineParameters("sdgsdggsdgsdgsdggagadsagsdgasd",true,true,false),
-                new virtualMachineParameters("program.pgt",true,true,true),
-                new virtualMachineParameters("sdgsdg",false,false,true)
+                new InterpretatorParameters("sdgsdgsdgsdgsdg.sdf",true,false,false),
+                new InterpretatorParameters("sdgsdggsdgsdgsdggagadsagsdgasd",true,true,false),
+                new InterpretatorParameters("program.pgt",true,true,true),
+                new InterpretatorParameters("sdgsdg",false,false,true)
             };
         }
 
@@ -44,7 +44,7 @@ namespace testing
             for(int i =0;i<argumentsParsingTestStrings.Count;i++)
             {
                 string[] args = argumentsParsingTestStrings[i];
-                virtualMachineParameters paramsSample = argumentsParsingTestStructs[i];
+                InterpretatorParameters paramsSample = argumentsParsingTestStructs[i];
 #if DEBUG
                 Program.fillVirtualMachineParameters(args);
 #endif
@@ -54,8 +54,8 @@ namespace testing
                     Console.Write(" ");
                 }
                 Console.Write("\n");
-                Console.WriteLine(Parameters.virtualMachineParameters.ToString());
-                if(!(Parameters.virtualMachineParameters==paramsSample))
+                Console.WriteLine(Parameters.InterParameters.ToString());
+                if(!(Parameters.InterParameters==paramsSample))
                 {
                     success = false;
                     Console.WriteLine("TEST FAIL");

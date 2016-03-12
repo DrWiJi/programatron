@@ -22,10 +22,10 @@ namespace testing
             };
             argumentsParsingTestStructs = new List<InterpretatorParameters>
             {
-                new InterpretatorParameters("sdgsdgsdgsdgsdg.sdf",true,false,false),
-                new InterpretatorParameters("sdgsdggsdgsdgsdggagadsagsdgasd",true,true,false),
-                new InterpretatorParameters("program.pgt",true,true,true),
-                new InterpretatorParameters("sdgsdg",false,false,true)
+                new InterpretatorParameters("sdgsdgsdgsdgsdg.sdf",true,false,false,false),
+                new InterpretatorParameters("sdgsdggsdgsdgsdggagadsagsdgasd",true,true,false,false),
+                new InterpretatorParameters("program.pgt",true,true,true,false),
+                new InterpretatorParameters("sdgsdg",false,false,true,false)
             };
         }
 

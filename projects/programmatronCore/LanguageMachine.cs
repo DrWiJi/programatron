@@ -31,18 +31,20 @@ namespace programmatronCore
 		public bool isDebug;
 		public bool isIgnoreWarnings;
 		public bool isSaveReports;
+        public bool isQuickLightRun;
 		
-		public InterpretatorParameters(string executableFilePath, bool debugMode, bool ignoreWarnings, bool saveReports)
+		public InterpretatorParameters(string executableFilePath, bool debugMode, bool ignoreWarnings, bool saveReports,bool quickLightRun)
 		{
 		    this.executableFilePath = executableFilePath;
 		    this.isSaveReports = saveReports;
 		    this.isIgnoreWarnings = ignoreWarnings;
 		    this.isDebug = debugMode;
+            this.isQuickLightRun = quickLightRun;
 		}
 		
 		public override String ToString()
 		{
-		    return executableFilePath + " Debug: " + isDebug.ToString() + " Ignore Warnings: " + isIgnoreWarnings.ToString() + " Save Reports: " + isSaveReports.ToString();
+		    return executableFilePath + " Debug: " + isDebug.ToString() + " Ignore Warnings: " + isIgnoreWarnings.ToString() + " Save Reports: " + isSaveReports.ToString()+" Quick run: " + isQuickLightRun;
 		}
 		
 		public static bool operator==(InterpretatorParameters a, InterpretatorParameters b)

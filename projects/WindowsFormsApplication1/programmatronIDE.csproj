@@ -80,9 +80,18 @@
       <DependentUpon>NewProjectWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
+    <Compile Include="ProjectSettingsWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProjectSettingsWindow.Designer.cs">
+      <DependentUpon>ProjectSettingsWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProjectSettingsWindow.resx">
+      <DependentUpon>ProjectSettingsWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -147,6 +156,9 @@
       <Project>{2f6a66f7-7696-45f9-9414-38f9d847e68f}</Project>
       <Name>SerializableClasses</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="TO DO.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

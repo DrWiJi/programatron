@@ -13,10 +13,16 @@ namespace SerializableClasses
         //path to source code file
         public String ListingFileName;
         public String ProjectName;
+        public String VisibleProjectName;
+        public bool QuickLightRun;
+        public bool SaveReports;
         public ProgrammatronProject()
         {
             ListingFileName = "program.pgt";
             ProjectName = "default project";
+            VisibleProjectName = "Default Project";
+            QuickLightRun = true;
+            SaveReports = false;
         }
 
         public String GetProjectPropertiesFileName()

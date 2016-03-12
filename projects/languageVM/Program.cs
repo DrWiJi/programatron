@@ -32,16 +32,16 @@ namespace languageVM
             Console.ReadKey();
 #else
             applicationInitialize(args);
-            Console.WriteLine("ЗАПУСК");
+            Env.log.message("Запуск...");
             if (Parameters.InterParameters.executableFilePath!=null&&File.Exists(Parameters.InterParameters.executableFilePath))
             {
                 executeCode(getSourceCode());
             }
             else
             {
-                Console.WriteLine(Parameters.InterParameters.executableFilePath);
-                Console.WriteLine("!!! Указанный файл не существует или вовсе не был указан. !!!");
-                Console.WriteLine("Попытка открытия стандартного расположения...");
+                Env.log.message(Parameters.InterParameters.executableFilePath);
+                Env.log.message("!!! Указанный файл не существует или вовсе не был указан. !!!");
+                Env.log.message("Попытка открытия стандартного расположения...");
                 if(File.Exists(Constants.defaultExecuteFilePath))
                 {
                     Parameters.InterParameters.executableFilePath = Constants.defaultExecuteFilePath;
@@ -49,7 +49,7 @@ namespace languageVM
                 }
                 else
                 {
-                    Console.WriteLine("Открытие стандартного расположения не удалось. \nОткрыть и запустить файл с кодом на Программатроне можно просто перетаскивая их на этот исполняемый файл или\nОткрыть с помощью>>Другое");
+                    Env.log.message("Открытие стандартного расположения не удалось. \nОткрыть и запустить файл с кодом на Программатроне можно просто перетаскивая их на этот исполняемый файл или\nОткрыть с помощью>>Другое");
                     String en = Console.ReadLine();
                 }
             }
@@ -58,13 +58,14 @@ namespace languageVM
 
         static void executeCode(String code)
         {
-            Console.Clear();
+            if(Parameters.InterParameters.isQuickLightRun)
+                Console.Clear();
             LexemAnalyzer sa = new LexemAnalyzer(code);
             List<Lexem> list = sa.analize();
             SyntaxTreeGenerator gen = new SyntaxTreeGenerator(list);
             gen.generateTree();
             gen.doCode();
-            Console.WriteLine("Выполнение завершено, нажмите любую клавишу...");
+            Env.log.message("Выполнение завершено, нажмите любую клавишу...");
             Console.ReadKey();
         }
 
@@ -96,6 +97,7 @@ namespace languageVM
             Parameters.InterParameters.isDebug = getAvailabilityNormalFlagFromArgs("-debug",args);
             Parameters.InterParameters.isIgnoreWarnings = getAvailabilityNormalFlagFromArgs("-ignoreWarnings", args);
             Parameters.InterParameters.isSaveReports = getAvailabilityNormalFlagFromArgs("-saveReports", args);
+            Parameters.InterParameters.isQuickLightRun = getAvailabilityNormalFlagFromArgs("-quickLightRun",args);
         }
 
         static String getExecutableFilePathFromArgsOrDefault(string[] args)

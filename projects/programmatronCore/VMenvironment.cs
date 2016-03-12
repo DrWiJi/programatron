@@ -36,7 +36,8 @@ namespace InterpretatorEnveronment
             //генерирует путь в виде /Logs/01.08.2015 17-20.log
             prepareDirectory();
             logFilePath = generateLogFilePath();
-            logFileStream = new StreamWriter(logFilePath,false);
+            if(Parameters.InterParameters.isSaveReports)
+                logFileStream = new StreamWriter(logFilePath,false);
             logPipe = new NamedPipeClientStream("programmatronDebugPipe");
         }
 
@@ -121,11 +122,8 @@ namespace InterpretatorEnveronment
 
         private void sendToConsole()
         {
-            Console.Write(DateTime.Now.ToString() + " ");
             if (currentTitle.Length != 0)
                 Console.WriteLine(currentTitle);
-            else
-                Console.Write("\n");
             Console.WriteLine(currentText);
         }
     }

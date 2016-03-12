@@ -60,11 +60,17 @@ namespace ProgrammatronIDE
                 ProjectManager.CreateProjectFiles(project);
             }
             LoadProgrammatronProject(project);
+            UpdateTitle();
+        }
+
+        private void UpdateTitle()
+        {
+            this.Text = "Programmatron IDE - " + IDEState.Settings.LastProject.VisibleProjectName;
         }
 
         private void LoadProgrammatronProject(ProgrammatronProject project)
         {
-            sourceCodeBox.Text = ProjectManager.GetCurrentProjectListing();
+            sourceCodeBox.Text = ProjectManager.GetCurrentProjectListingFromProjectListingFile();
         }
 
         private void inTextBox_TextChanged(object sender, EventArgs e)
@@ -88,15 +94,26 @@ namespace ProgrammatronIDE
         }
 
         /// <summary>
-        /// executeButtonClicked
+        /// Execute
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void toolStripButton3_Click(object sender, EventArgs e)
         {
-            ProjectManager.SaveProjectListingFile(ProjectManager.GetCurrentProjectListing());
-            ProcessStartInfo executeProcessInfo = new ProcessStartInfo("programmatronExecutable", "\""+ProjectManager.GetCurrentProjectListingFullPath()+"\""+" -debug");
+            ProjectManager.SaveProjectListingFile(sourceCodeBox.Text);
+            ProcessStartInfo executeProcessInfo = new ProcessStartInfo("programmatronExecutable", GenerateArgsForInterpreter());
             Process.Start(executeProcessInfo);
+        }
+
+        private String GenerateArgsForInterpreter()
+        {
+            String quickRunFlag = "";
+            if (IDEState.Settings.LastProject.QuickLightRun)
+                quickRunFlag = " -quickLightRun";
+            String saveReportsFlag = "";
+            if (IDEState.Settings.LastProject.SaveReports)
+                saveReportsFlag = " -saveReports";
+            return "\"" + ProjectManager.GetCurrentProjectListingFullPath() + "\"" + " -debug" + quickRunFlag + saveReportsFlag;
         }
 
         private void MainWindow_FormClosed(object sender, FormClosedEventArgs e)
@@ -105,10 +122,28 @@ namespace ProgrammatronIDE
             IDEState.SaveSettings();
         }
 
+        /// <summary>
+        /// Save
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void toolStripButton2_Click(object sender, EventArgs e)
         {
             ProjectManager.SaveProjectListingFile(sourceCodeBox.Text);
             ProjectManager.SaveProjectPropertyFile(IDEState.Settings.LastProject);
+        }
+
+        /// <summary>
+        /// Settings... 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void toolStripButton1_Click_1(object sender, EventArgs e)
+        {
+            ProjectSettingsWindow wnd = new ProjectSettingsWindow();
+            wnd.ProjectNameChanged += UpdateTitle;
+            wnd.Show();
+
         }
     }
 
@@ -190,8 +225,17 @@ namespace ProgrammatronIDE
             SaveProjectPropertyFile(IDEState.Settings.LastProject);
             using (StreamWriter writer = new StreamWriter(GetCurrentProjectListingFullPath(), false,Encoding.Default))
             {
-                writer.Write("выводСтрокой(\"Привет, мир! Напишите свою первую программу.\")");
+                writer.Write("");
                 writer.Close();
+            }
+        }
+
+        static public void RemoveProjectFiles(ProgrammatronProject project)
+        {
+            if (Directory.Exists(IDEState.publicDefaultProjectsPath))
+            {
+                File.Delete(GetCurrentProjectListingFullPath());
+                File.Delete(GetCurrentProjectPropertiesFullPath());
             }
         }
 
@@ -215,7 +259,7 @@ namespace ProgrammatronIDE
             }
         }
 
-        static public String GetCurrentProjectListing()
+        static public String GetCurrentProjectListingFromProjectListingFile()
         {
             String listing = "";
             using (StreamReader reader = new StreamReader(GetCurrentProjectListingFullPath(), Encoding.Default))

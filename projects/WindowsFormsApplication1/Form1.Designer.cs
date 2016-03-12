@@ -35,7 +35,7 @@
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.newToolButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.SettingsButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
@@ -79,7 +79,7 @@
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.newToolButton,
             this.toolStripButton2,
-            this.toolStripButton1,
+            this.SettingsButton,
             this.toolStripSeparator1,
             this.toolStripButton3,
             this.toolStripButton4,
@@ -108,13 +108,13 @@
             this.toolStripButton2.Text = "Сохранить";
             this.toolStripButton2.Click += new System.EventHandler(this.toolStripButton2_Click);
             // 
-            // toolStripButton1
+            // SettingsButton
             // 
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(106, 22);
-            this.toolStripButton1.Text = "Сохранить как";
+            this.SettingsButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.SettingsButton.Name = "SettingsButton";
+            this.SettingsButton.Size = new System.Drawing.Size(118, 22);
+            this.SettingsButton.Text = "Настройки проекта";
+            this.SettingsButton.Click += new System.EventHandler(this.toolStripButton1_Click_1);
             // 
             // toolStripSeparator1
             // 
@@ -174,7 +174,7 @@
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton newToolButton;
         private System.Windows.Forms.ToolStripButton toolStripButton2;
-        private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolStripButton SettingsButton;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton toolStripButton3;
         private System.Windows.Forms.ToolStripButton toolStripButton4;

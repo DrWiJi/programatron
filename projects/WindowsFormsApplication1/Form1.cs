@@ -211,6 +211,12 @@ namespace ProgrammatronIDE
             }
             e.Cancel = false;
         }
+
+        private void toolStripButton6_Click(object sender, EventArgs e)
+        {
+            ProcessStartInfo HelpInfo = new ProcessStartInfo("helpSystem.exe");
+            Process.Start(HelpInfo);
+        }
     }
 
     class IDEState

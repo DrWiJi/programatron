@@ -73,6 +73,12 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="IDESettingsWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="IDESettingsWindow.Designer.cs">
+      <DependentUpon>IDESettingsWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="NewProjectWindow.cs">
       <SubType>Form</SubType>
     </Compile>

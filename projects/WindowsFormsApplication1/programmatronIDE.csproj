@@ -90,6 +90,9 @@
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="NewProjectWindow.resx">
+      <DependentUpon>NewProjectWindow.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ProjectSettingsWindow.resx">
       <DependentUpon>ProjectSettingsWindow.cs</DependentUpon>
     </EmbeddedResource>

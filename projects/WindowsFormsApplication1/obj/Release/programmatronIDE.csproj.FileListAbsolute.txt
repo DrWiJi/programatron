@@ -21,3 +21,4 @@ D:\Repos\programatron\projects\WindowsFormsApplication1\bin\Release\Serializable
 D:\Repos\programatron\projects\WindowsFormsApplication1\bin\Release\SerializableClasses.pdb
 D:\Repos\programatron\projects\WindowsFormsApplication1\bin\Release\SerializableClasses.XmlSerializers.dll
 D:\Repos\programatron\projects\WindowsFormsApplication1\obj\Release\ProgrammatronIDE.ProjectSettingsWindow.resources
+D:\Repos\programatron\projects\WindowsFormsApplication1\obj\Release\ProgrammatronIDE.NewProjectWindow.resources

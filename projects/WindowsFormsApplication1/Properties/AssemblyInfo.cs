@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // Управление общими сведениями о сборке осуществляется с помощью 
 // набора атрибутов. Измените значения этих атрибутов, чтобы изменить сведения,
 // связанные со сборкой.
-[assembly: AssemblyTitle("Programmatro IDE")]
+[assembly: AssemblyTitle("Programmatron IDE")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Programmatro IDE Shell")]
+[assembly: AssemblyProduct("Programmatron IDE Shell")]
 [assembly: AssemblyCopyright("Copyright ©  2015-2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // Можно задать все значения или принять номера сборки и редакции по умолчанию 
 // используя "*", как показано ниже:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.0.2.0")]
-[assembly: AssemblyFileVersion("0.0.2.0")]
+[assembly: AssemblyVersion("0.0.3.0")]
+[assembly: AssemblyFileVersion("0.0.3.0")]

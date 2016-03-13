@@ -90,7 +90,9 @@ namespace ProgrammatronIDE
 
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
-
+            NewProjectWindow wnd = new NewProjectWindow();
+            wnd.Show();
+            wnd.CreatedProject += LoadCurrentProject;
         }
 
         /// <summary>
@@ -118,7 +120,7 @@ namespace ProgrammatronIDE
 
         private void MainWindow_FormClosed(object sender, FormClosedEventArgs e)
         {
-            //TO DO перенести в событие FormClosing и предложить сохранить перед выходом
+            //TO DO отправить в окно настройки IDE
             IDEState.SaveSettings();
         }
 
@@ -143,7 +145,71 @@ namespace ProgrammatronIDE
             ProjectSettingsWindow wnd = new ProjectSettingsWindow();
             wnd.ProjectNameChanged += UpdateTitle;
             wnd.Show();
+        }
 
+        public void LoadCurrentProject()
+        {
+            ProjectManager.LoadProjectPropertiesFiles(ProjectManager.GetCurrentProjectPropertiesFullPath());
+            sourceCodeBox.Text = ProjectManager.GetCurrentProjectListingFromProjectListingFile();
+            UpdateTitle();
+        }
+
+        /// <summary>
+        /// Open...
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void toolStripButton1_Click_2(object sender, EventArgs e)
+        {
+            //Temp
+            LoadExistingProject();
+        }
+
+        private void LoadExistingProject()
+        {
+            OpenFileDialog dlg = new OpenFileDialog();
+            dlg.Filter = "Programmatron project *.pgtp|*.pgtp";
+            dlg.Title = "Выберите файл с проектом, который хотите открыть";
+            dlg.InitialDirectory = IDEState.Settings.ProjectsPath;
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                if (Path.GetDirectoryName(dlg.FileName) != IDEState.Settings.ProjectsPath)
+                {
+                    MessageBox.Show("Неверная директория. Выберите файл из стандартной директории с проектами.", "Внимание");
+                    LoadExistingProject();
+                    return;
+                }
+                OpenProjectByFileName(dlg.FileName);
+            }
+        }
+
+        private void OpenProjectByFileName(String str)
+        {
+            ProjectManager.LoadProjectPropertiesFilesFromFullPath(str);
+            sourceCodeBox.Text = ProjectManager.GetCurrentProjectListingFromProjectListingFile();
+            UpdateTitle();
+        }
+
+        private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if(ProjectManager.GetCurrentProjectListingFromProjectListingFile()!=sourceCodeBox.Text)
+            {
+                DialogResult result = MessageBox.Show("Сохранить изменения перед выходом?", "Выход", MessageBoxButtons.YesNoCancel);
+                if(result == DialogResult.No)
+                {
+                    return;
+                }
+                else if(result == DialogResult.Yes)
+                {
+                    ProjectManager.SaveProjectListingFile(sourceCodeBox.Text);
+                }
+                else
+                {
+                    e.Cancel = true;
+                    return;
+                }
+            }
+            e.Cancel = false;
         }
     }
 
@@ -222,8 +288,8 @@ namespace ProgrammatronIDE
         static public void CreateProjectFiles(ProgrammatronProject project)
         {
             IDEState.RestoreDirectory(IDEState.publicDefaultProjectsPath);
-            SaveProjectPropertyFile(IDEState.Settings.LastProject);
-            using (StreamWriter writer = new StreamWriter(GetCurrentProjectListingFullPath(), false,Encoding.Default))
+            SaveProjectPropertyFile(project);
+            using (StreamWriter writer = new StreamWriter(GetProjectListingFullPath(project.ListingFileName), false,Encoding.Default))
             {
                 writer.Write("");
                 writer.Close();
@@ -244,15 +310,35 @@ namespace ProgrammatronIDE
             return IDEState.Settings.ProjectsPath + @"\" + IDEState.Settings.LastProject.GetProjectPropertiesFileName();
         }
 
+        public static string GetProjectPropertiesFullPath(String ProjectName)
+        {
+            return IDEState.Settings.ProjectsPath + @"\" + ProjectName+".pgtp";
+        }
+
         public static string GetCurrentProjectListingFullPath()
         {
             return IDEState.Settings.ProjectsPath + @"\" + IDEState.Settings.LastProject.ListingFileName;
         }
 
+        public static string GetProjectListingFullPath(String ListingNameFile)
+        {
+            return IDEState.Settings.ProjectsPath + @"\" + ListingNameFile;
+        }
+
         static public void LoadProjectPropertiesFiles(String ProjectPropertiesFilePath)
         {
             XmlSerializer ser = new XmlSerializer(typeof(ProgrammatronProject));
-            using (StreamReader reader = new StreamReader(GetCurrentProjectPropertiesFullPath()))
+            using (StreamReader reader = new StreamReader(GetProjectPropertiesFullPath(ProjectPropertiesFilePath)))
+            {
+                IDEState.Settings.LastProject = ser.Deserialize(reader) as ProgrammatronProject;
+                reader.Close();
+            }
+        }
+
+        static public void LoadProjectPropertiesFilesFromFullPath(String ProjectPropertiesFilePath)
+        {
+            XmlSerializer ser = new XmlSerializer(typeof(ProgrammatronProject));
+            using (StreamReader reader = new StreamReader(ProjectPropertiesFilePath))
             {
                 IDEState.Settings.LastProject = ser.Deserialize(reader) as ProgrammatronProject;
                 reader.Close();
@@ -272,9 +358,9 @@ namespace ProgrammatronIDE
 
         static public void SaveProjectPropertyFile(ProgrammatronProject project)
         {
-            IDEState.RestoreDirectory(Path.GetDirectoryName(GetCurrentProjectPropertiesFullPath()));
+            IDEState.RestoreDirectory(Path.GetDirectoryName(IDEState.SettingsFilePath));
             XmlSerializer ser = new XmlSerializer(typeof(ProgrammatronProject));
-            using (StreamWriter writer = new StreamWriter(GetCurrentProjectPropertiesFullPath(), false))
+            using (StreamWriter writer = new StreamWriter(GetProjectPropertiesFullPath(project.ProjectName), false))
             {
                 ser.Serialize(writer, project);
                 writer.Close();

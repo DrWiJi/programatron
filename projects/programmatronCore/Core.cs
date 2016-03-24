@@ -486,9 +486,12 @@ namespace programmatronCore
 		        }
 		        else if (typeOfNextTerm == TermType.error)
 		        {
+                    if (lexemIndex == -1)
+                        lexemIndex = 0;
                     InterpretatorEnveronment.Env.reporter.describeError("Неизвестная синтаксическая структура", 100110004, lexems[lexemIndex].StringNumber, "Синтаксическая ошибка");
+                    return;
 		        }
-		         lexemIndex++;
+		        lexemIndex++;
 		    } while ((typeOfNextTerm != TermType.none || typeOfNextTerm != TermType.error) && lexemIndex < lexems.Count - 1);
 		}
 		
@@ -557,7 +560,11 @@ namespace programmatronCore
 		
 		private bool lexemsIsFunctionCall(int startIndex, int endIndex)
 		{
-		    if (lexemIsIdentifier(startIndex) && lexemIsOpenParentheses(startIndex + 1) && lexemsIsArgumentList(startIndex + 2, endIndex - 2) && lexemIsClosedParentheses(endIndex - 1) && lexemIsSemicolon(endIndex))
+            if(lexemIsIdentifier(startIndex) && lexemIsOpenParentheses(startIndex+1) && lexemIsClosedParentheses(startIndex+2))
+            {
+                return true;
+            }
+		    if (lexemIsIdentifier(startIndex) && lexemIsOpenParentheses(startIndex + 1) && lexemsIsArgumentList(startIndex + 2, endIndex - 2) && lexemIsClosedParentheses(endIndex - 1))
 		    {
 		        return true;
 		    }
@@ -566,6 +573,7 @@ namespace programmatronCore
 		
 		private bool lexemsIsArgumentList(int start, int end)
 		{
+
 		    int leftComma = findFirstSymbol(",",start,end);
 		    int rightComma = findFirstSymbol(",", start+1, end);
 		    if (leftComma != -1 && rightComma != -1 && leftComma != rightComma&&lexemsIsValue(leftComma+1,rightComma-1)&&lexemsIsArgumentList(rightComma+1,end))
@@ -679,6 +687,13 @@ namespace programmatronCore
 		        root.addChild(subTerm);
 		        return;
 		    }
+            else if(lexemsIsFunctionCall(startIndex,endIndex))
+            {
+                subTerm.Name = lexems[startIndex];
+                subTerm.Type = TermType.functionCall;
+                root.addChild(subTerm);
+                return;
+            }
 		    int basicPoint = getBasicPoint(startIndex, endIndex);
 		    int subBasicPoint = getSubBasicPoint(startIndex, endIndex);
 		    if (basicPoint != -1)
@@ -815,6 +830,10 @@ namespace programmatronCore
 		    {
 		        return true;
 		    }
+            if(lexemsIsFunctionCall(startIndex,endIndex))
+            {
+                return true;
+            }
 		    return false;
 		}
 		
@@ -1007,7 +1026,7 @@ namespace programmatronCore
             }
 		}
 		
-		void functionCaller(Term term)
+		FunctionResult functionCaller(Term term)
 		{
             List<FunctionArgument> args = new List<FunctionArgument>();
             foreach(Term cur in term.Childs)
@@ -1034,6 +1053,7 @@ namespace programmatronCore
             try
             {
                 result = Functions.CallFunction(args, term.Name);
+                return result;
             }catch (WrongArgumentCountException ex)
             {
                 Env.reporter.describeError(ex.Message, 100100007, term.Name.StringNumber, "Неверное количество аргументов");
@@ -1060,56 +1080,70 @@ namespace programmatronCore
 		
 		String calculateValue(Term term)
 		{
-		    if (term.Type == TermType.variableAssignment || term.Type == TermType.variableDefinitionAssignment)
-		    {
-                if (term.Childs.Count == 1)
-                    return calculateValue(term.Childs[0]);
+            try
+            {
+
+
+                if (term.Type == TermType.variableAssignment || term.Type == TermType.variableDefinitionAssignment)
+                {
+                    if (term.Childs.Count == 1)
+                        return calculateValue(term.Childs[0]);
+                    else
+                    {
+                        InterpretatorEnveronment.Env.reporter.describeError("Неверно построено синтаксическое дерево. Обратитесь в поддержку.", 100119999, term.Childs[0].Name.StringNumber, "Внутренняя ошибка");
+                        return "";
+                    }
+                }
+                else if (term.Type == TermType.mathAddition)
+                {
+                    //TO DO добавить поддержку длинной арифметики
+                    return calculateOperation(term, operationAdd);
+                }
+                else if (term.Type == TermType.mathMultiplication)
+                {
+                    //TO DO добавить поддержку длинной арифметики
+                    return calculateOperation(term, operationMul);
+                }
+                else if (term.Type == TermType.mathSubtraction)
+                {
+                    //TO DO добавить поддержку длинной арифметики
+                    return calculateOperation(term, operationDec);
+                }
+                else if (term.Type == TermType.mathDivision)
+                {
+                    //TO DO добавить поддержку длинной арифметики
+                    return calculateOperation(term, operationDiv);
+                }
+                else if (term.Type == TermType.atomicValue)
+                {
+                    return term.Value;
+                }
+                else if (term.Type == TermType.variableValue)
+                {
+                    if (Variables.Storage.ContainsKey(term.Name))
+                    {
+                        return Variables.Storage[term.Name];
+                    }
+                    else
+                    {
+                        InterpretatorEnveronment.Env.reporter.describeError("Неизвестный идентификатор " + term.Name, 100100005, term.Name.StringNumber, "Неверный идентификатор");
+                        return "";
+                    }
+                }
+                else if (term.Type == TermType.functionCall)
+                {
+                    FunctionResult res = functionCaller(term);
+                    return res.Result;
+                }
                 else
                 {
-                    InterpretatorEnveronment.Env.reporter.describeError("Неверно построено синтаксическое дерево. Обратитесь в поддержку.", 100119999, term.Childs[0].Name.StringNumber, "Внутренняя ошибка");
+                    InterpretatorEnveronment.Env.reporter.describeError("Выполнение оператора не реализовано " + term.Name, 100100005, term.Name.StringNumber, "Выполнение не реализовано");
                     return "";
                 }
             }
-		    else if (term.Type == TermType.mathAddition)
-		    {
-		        //TO DO добавить поддержку длинной арифметики
-		        return calculateOperation(term, operationAdd);
-		    }
-		    else if (term.Type == TermType.mathMultiplication)
-		    {
-		        //TO DO добавить поддержку длинной арифметики
-		        return calculateOperation(term, operationMul);
-		    }
-		    else if (term.Type == TermType.mathSubtraction)
-		    {
-		        //TO DO добавить поддержку длинной арифметики
-		        return calculateOperation(term, operationDec);
-		    }
-		    else if (term.Type == TermType.mathDivision)
-		    {
-		        //TO DO добавить поддержку длинной арифметики
-		        return calculateOperation(term, operationDiv);
-		    }
-		    else if (term.Type == TermType.atomicValue)
-		    {
-		        return term.Value;
-		    }
-		    else if(term.Type == TermType.variableValue)
-		    {
-		        if(Variables.Storage.ContainsKey(term.Name))
-		        {
-		            return Variables.Storage[term.Name];
-		        }
-		        else
-		        {
-                    InterpretatorEnveronment.Env.reporter.describeError("Неизвестный идентификатор " + term.Name, 100100005, term.Name.StringNumber, "Неверный идентификатор");
-                    return "";
-                }
-		    }
-		    else
-		    {
-                InterpretatorEnveronment.Env.reporter.describeError("Выполнение оператора не реализовано " + term.Name, 100100005, term.Name.StringNumber, "Выполнение не реализовано");
-                return "";
+            catch(Exception ex)
+            {
+                throw ex;
             }
 		}
 		

@@ -2,3 +2,4 @@ D:\Repos\programatron\projects\FunctionsRealization\bin\Release\FunctionsRealiza
 D:\Repos\programatron\projects\FunctionsRealization\bin\Release\FunctionsRealization.pdb
 D:\Repos\programatron\projects\FunctionsRealization\obj\Release\FunctionsRealization.dll
 D:\Repos\programatron\projects\FunctionsRealization\obj\Release\FunctionsRealization.pdb
+D:\Repos\programatron\projects\FunctionsRealization\obj\Release\FunctionsRealization.csprojResolveAssemblyReference.cache

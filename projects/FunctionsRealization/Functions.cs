@@ -157,4 +157,23 @@ namespace FunctionsList
             return Result;
         }
     }
+    public class GetTimeFunc : FunctionTemplate
+    {
+        public GetTimeFunc()
+            : base()
+        {
+            Name = "текущееВремя";
+            String descr = "\\par\tВозвращает текущее время в тиках числом. Тик - минимальная единица процессорного времени.\\par";
+            Info = new FunctionHelpInfo("Окружение", ValueTypeEnum.Number, "ничего", descr,
+                new List<ArgumentPrototypeInfo> ());
+            Result = new FunctionResult();
+            Result.ResultTypeEnum = ValueTypeEnum.Number;
+        }
+
+        public override FunctionResult execute(List<FunctionArgument> args)
+        {
+            Result.Result = ((float)DateTime.Now.Ticks).ToString();
+            return Result;
+        }
+    }
 }

@@ -19,7 +19,8 @@ namespace FunctionsList
             new WriteStrFunc(), 
             new ReadFunc(),
             new ReadSymbolFunc(),
-            new WriteFunc()
+            new WriteFunc(),
+            new GetTimeFunc()
         };
 
         public static FunctionResult CallFunction(List<FunctionArgument> args,String name)
@@ -49,10 +50,10 @@ namespace FunctionsList
         private static bool ArgumentsMatch(FunctionTemplate func, List<FunctionArgument> args)
         {
             List<ArgumentPrototypeInfo> mask = func.Info.RequiredArgumentsFormats;
-            if(mask.Count==0)
+            /*if(mask.Count==0)
             {
                 throw new Exception("Отсутствует определение аргументов функции. Внутренняя ошибка");
-            }
+            }*/
             int j = 0;
             int i = 0;
             if(mask.Count==0&&args.Count==0)
@@ -63,6 +64,11 @@ namespace FunctionsList
             {
                 return false;
             }
+            if(mask.Count!=0 && args.Count==0)
+            {
+                return false;
+            }
+            
             while(i<mask.Count)
             {
                 if(!ArgumentMatch(mask[j],args[i]))

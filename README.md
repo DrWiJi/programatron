@@ -1,11 +1,11 @@
 # programmatron
-This is a Programmatron interpretator on C#.
-Programmatron is lightweight C-like syntax programming language.
+Programmatron interpreter on C#.
+Programmatron is lightweight C-like programming language.
 
 Features:
 -Not strongly typed
--Lexis from russian language
--High level design
+-Lexis based on russian language
+-High level
 -Education language
 
 This language planned make as easy programming language for newbies. 

@@ -9,7 +9,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using InterpretatorEnveronment;
+using InterpretatorEnvironment;
 using FunctionsList;
 
 namespace programmatronCore
@@ -72,7 +72,7 @@ namespace programmatronCore
 		    catch (Exception ex)
 		    {
 		        if (ex is ArgumentException)
-		            InterpretatorEnveronment.Env.reporter.describeError("Невозможно запустить синтаксический анализ. Вероятно, исходный код пуст. Напишите код, а затем запускайте.", 101000001, 0, "Пустой код");
+		            InterpretatorEnvironment.Env.reporter.describeError("Невозможно запустить синтаксический анализ. Вероятно, исходный код пуст. Напишите код, а затем запускайте.", 101000001, 0, "Пустой код");
 		    }
 		    finally
 		    {
@@ -151,7 +151,7 @@ namespace programmatronCore
 		
 		    if (currentLexem.Length == 0)
 		    {
-                InterpretatorEnveronment.Env.reporter.describeError("Сгенерирована пустая лексема", 101000002, currentStringNumber, "Внутренняя ошибка");
+                InterpretatorEnvironment.Env.reporter.describeError("Сгенерирована пустая лексема", 101000002, currentStringNumber, "Внутренняя ошибка");
 		    }
 		    lexems.Add(new Lexem(currentStringNumber,oldIndex,i,currentLexem));
 		}
@@ -193,167 +193,569 @@ namespace programmatronCore
 			}
 		}
 	}
+
+    public abstract class SyntaxTreeNode
+    {
+        protected List<SyntaxTreeNode> _Childs;
+
+        public List<SyntaxTreeNode> Childs
+        {
+            get { return _Childs; }
+        }
+
+        public SyntaxTreeNode Parent;
+        public SyntaxTreeNode()
+        {
+            _Childs = new List<SyntaxTreeNode>();
+        }
+        public virtual String Execute()
+        {
+            return "";//TODO реализовать режим отладки из IDE
+        }
+
+        protected string MathCalculatingOperation()
+        {
+            if (_Childs.Count == 2)
+            {
+                String leftValue = _Childs[0].Execute();
+                String rightValue = _Childs[1].Execute();
+                return MathOperation(leftValue, rightValue);
+            }
+            if (_Childs.Count == 1 && (this is MathSubstraction || this is MathAddition))
+            {
+                String leftValue = "0";
+                String rightValue = _Childs[0].Execute();
+                return MathOperation(leftValue, rightValue);
+            }
+            if (_Childs.Count == 1 && (this is MathDivision))
+            {
+                String leftValue = "1";
+                String rightValue = _Childs[0].Execute();
+                return MathOperation(leftValue, rightValue);
+            }
+            InterpretatorEnvironment.Env.reporter.describeError("Неверно построено синтаксическое дерево. Обратитесь в поддержку.", 100119999, _Childs[0].GetStringNumber(), "Внутренняя ошибка");
+            return "";
+        }
+
+        public virtual String MathOperation(String left, String right)
+        {
+            return "";
+        }
+
+        protected String buildStringSumm(String a, String b)
+        {
+            if (a.Length == 0)
+                return b;
+            if (b.Length == 0)
+                return a;
+            String result = "";
+            int i;
+            if (a[0] == '\"')
+            {
+                result += a[0];
+                i = 1;
+                while (a[i] != '\"')
+                {
+                    result += a[i];
+                    i++;
+                }
+            }
+            else
+            {
+                result += '\"';
+                i = 0;
+                while (i < a.Length)
+                {
+                    result += a[i];
+                    i++;
+                }
+            }
+            if (b[0] == '\"')
+            {
+                i = 1;
+                while (i < b.Length)
+                {
+                    result += b[i];
+                    i++;
+                }
+            }
+            else
+            {
+                i = 0;
+                while (i < b.Length)
+                {
+                    result += b[i];
+                    i++;
+                }
+                result += '\"';
+            }
+            return result;
+        }
+
+        protected String getStringVariableWithoutQuotes(String s)
+        {
+            if (s.Length == 0)
+                return "";
+            if (s[0] == '\"' && s[s.Length - 1] == '\"')
+            {
+                return s.Remove(0, 1).Remove(s.Length - 2, 1);
+            }
+            return s;
+        }
+
+        protected bool variableValueIsString(String value)
+        {
+            if (value.Length == 0)
+                return false;
+            return value[0] == '\"' && value[value.Length - 1] == '\"';
+        }
+
+        public virtual int GetStringNumber()
+        {
+            return _Childs[0].GetStringNumber();
+        }
+    }
+
+    public class VariableDefinition:SyntaxTreeNode
+    {
+        Lexem _VariableName;
+
+        public Lexem VariableName { get { return _VariableName; } }
+
+        public VariableDefinition(Lexem VarName):base()
+        {
+            _VariableName = VarName;
+        }
+
+        public override String Execute()
+        {
+            String Result = base.Execute();
+            Variables.Storage.Add(VariableName.Value, "");
+            return Result;
+        }
+
+        public override int GetStringNumber()
+        {
+            return _VariableName.StringNumber;
+        }
+    }
+
+    public class VariableAssignment:SyntaxTreeNode
+    {
+        private Lexem _VariableName;
+
+        public Lexem VariableName
+        {
+            get { return _VariableName; }
+        }
+
+        public VariableAssignment(Lexem VarName):base()
+        {
+            _VariableName = VarName;
+        }
+
+        public override string Execute()
+        {
+            String Result = base.Execute();
+            if (Variables.Storage.ContainsKey(_VariableName))
+            {
+                Result = Variables.Storage[_VariableName] = _Childs[0].Execute();
+            }
+            else
+            {
+                Env.reporter.describeError("Неизвестный идентификатор " + _VariableName, 100100005, VariableName.StringNumber, "Ошибка присвоения");
+            }
+            return Result;
+        }
+
+        public override int GetStringNumber()
+        {
+            return _VariableName.StringNumber;
+        }
+    }
+
+    public class VariableDefinitionAssignment : SyntaxTreeNode
+    {
+        private Lexem _VariableName;
+
+        public Lexem VariableName
+        {
+            get { return _VariableName; }
+        }
+
+        public VariableDefinitionAssignment(Lexem VarName)
+            : base()
+        {
+            _VariableName = VarName;
+        }
+
+        public override string Execute()
+        {
+            String Result = base.Execute();
+            Result = _Childs[0].Execute();
+            Variables.Storage.Add(_VariableName, Result);
+            return Result;
+        }
+
+        public override int GetStringNumber()
+        {
+            return _VariableName.StringNumber;
+        }
+    }
+
+    public class ProgramNode:SyntaxTreeNode
+    {
+        public ProgramNode():base()
+        {
+
+        }
+        public override string Execute()
+        {
+            String Result = base.Execute();
+            foreach(var child in _Childs)
+            {
+                Result = child.Execute();
+            }
+            return Result;
+        }
+    }
+
+    public class MathAddition:SyntaxTreeNode
+    {
+        public MathAddition()
+        {
+
+        }
+
+        public override string Execute()
+        {
+            String Result = base.Execute();
+            Result = base.MathCalculatingOperation();
+            return Result;
+        }
+
+        public override string MathOperation(string left, string right)
+        {
+            float leftFloatValue = 0;
+            float rightFloatValue = 0;
+            int leftIntValue = 0;
+            int rightIntValue = 0;
+            if (base.variableValueIsString(left) || variableValueIsString(right))
+            {
+                //что-то из операндов строки, складываем как строки
+                return buildStringSumm(left, right);
+            }
+            if (float.TryParse(left, NumberStyles.Any, new CultureInfo("en-US"), out leftFloatValue) && float.TryParse(right, NumberStyles.Any, new CultureInfo("en-US"), out rightFloatValue))
+            {
+                return (leftFloatValue + rightFloatValue).ToString(new CultureInfo("en-US"));
+            }
+
+            Env.reporter.describeError("Аргументы не подходят для указанной операции для " + left + right, 100100005, -1, "Неверные аргументы");
+            return "";
+        }
+
+    }
+
+    public class MathSubstraction : SyntaxTreeNode
+    {
+        public MathSubstraction()
+        {
+
+        }
+
+        public override string Execute()
+        {
+            String Result = base.Execute();
+            Result = base.MathCalculatingOperation();
+            return Result;
+        }
+
+        public override string MathOperation(string left, string right)
+        {
+            float leftFloatValue = 0;
+            float rightFloatValue = 0;
+            int leftIntValue = 0;
+            int rightIntValue = 0;
+            if (base.variableValueIsString(left) || variableValueIsString(right))
+            {
+                //что-то из операндов строки, складываем как строки
+                return buildStringSumm(left, right);
+            }
+            if (float.TryParse(left, NumberStyles.Any, new CultureInfo("en-US"), out leftFloatValue) && float.TryParse(right, NumberStyles.Any, new CultureInfo("en-US"), out rightFloatValue))
+            {
+                return (leftFloatValue - rightFloatValue).ToString(new CultureInfo("en-US"));
+            }
+
+            Env.reporter.describeError("Аргументы не подходят для указанной операции для " + left + right, 100100005, -1, "Неверные аргументы");
+            return "";
+        }
+
+    }
+
+    public class MathDivision : SyntaxTreeNode
+    {
+        public MathDivision()
+        {
+
+        }
+
+        public override string Execute()
+        {
+            String Result = base.Execute();
+            Result = base.MathCalculatingOperation();
+            return Result;
+        }
+
+        public override string MathOperation(string left, string right)
+        {
+            float leftFloatValue = 0;
+		    float rightFloatValue = 0;
+		    int leftIntValue = 0;
+		    int rightIntValue = 0;
+            if (variableValueIsString(left) || variableValueIsString(right))
+		    {
+		        //что-то из операндов строки, складываем как строки
+		        throw new ArgumentException("Нельзя делить строки");
+		    }
+            if (float.TryParse(left, NumberStyles.Any, new CultureInfo("en-US"), out leftFloatValue) && float.TryParse(right, NumberStyles.Any, new CultureInfo("en-US"), out rightFloatValue))
+		    {
+		        return (leftFloatValue / rightFloatValue).ToString(new CultureInfo("en-US"));
+		    }
+
+            Env.reporter.describeError("Аргументы не подходят для указанной операции для " + left + right, 100100005, -1, "Неверные аргументы");
+            return "";
+        }
+
+    }
+
+    public class MathMultiplication : SyntaxTreeNode
+    {
+        public MathMultiplication()
+        {
+
+        }
+
+        public override string Execute()
+        {
+            String Result = base.Execute();
+            Result = base.MathCalculatingOperation();
+            return Result;
+        }
+
+        public override string MathOperation(string left, string right)
+        {
+            float leftFloatValue = 0;
+            float rightFloatValue = 0;
+            int leftIntValue = 0;
+            int rightIntValue = 0;
+            if (variableValueIsString(left) || variableValueIsString(right))
+            {
+                //что-то из операндов строки, складываем как строки
+                throw new ArgumentException("Нельзя делить строки");
+            }
+            if (float.TryParse(left, NumberStyles.Any, new CultureInfo("en-US"), out leftFloatValue) && float.TryParse(right, NumberStyles.Any, new CultureInfo("en-US"), out rightFloatValue))
+            {
+                return (leftFloatValue * rightFloatValue).ToString(new CultureInfo("en-US"));
+            }
+
+            Env.reporter.describeError("Аргументы не подходят для указанной операции для " + left + right, 100100005, -1, "Неверные аргументы");
+            return "";
+        }
+    }
 	
-	public class Term
-	{
-		Term parent;
-		TermType type;
-		List<Term> childs;
-		Lexem value;
-		Lexem name;
-		bool valueIsExpression;
-		bool valueIsAssigned;
-		VariableType variableType;
-		
-		public bool ValueIsExpression
-		{
-			get
-			{
-				return valueIsExpression; 
-			}
-			
-			set
-			{
-				valueIsExpression = value; 
-			}
-		}
-		
-		public Lexem Name
-		{
-			get
-			{
-			    return name;
-			}
-			
-			set
-			{
-			    this.name = value;
-			}
-		}
-		
-		public Term(TermType type)
-		{
-		    initialize();
-		    this.type = type;
-		}
-		
-		public Term(Term parent, TermType type, VariableType varType)
-		{
-		    initialize();
-		    this.parent = parent;
-		    this.type = type;
-		    this.variableType = varType;
-		}
-		
-		public Term(Term parent, TermType type, Lexem value)
-		{
-		    initialize();
-		    this.parent = parent;
-		    this.type = type;
-		    this.value = value;
-		    valueIsAssigned = true;
-		
-		}
-		
-		public Term(Term parent, TermType type)
-		{
-		    initialize();
-		    this.parent = parent;
-		    this.type = type;
-		}
-		
-		public Term(Term parent)
-		{
-		    initialize();
-		    this.parent = parent;
-		}
-		
-		public Term()
-		{
-		    initialize();
-		}
-		
-		void initialize()
-		{
-		    parent = null;
-		    type = TermType.none;
-		    variableType = VariableType.none;
-		    childs = new List<Term>();
-		    value = null;
-		    valueIsExpression = false;
-		}
-		
-		public bool ValueIsAssigned
-		{
-			get
-			{
-				return valueIsAssigned; 
-			}
-		}
-		
-		public Lexem Value
-		{
-			get
-			{
-				return value; 
-			}
-			
-			set
-			{
-			    this.value = value;
-			    valueIsAssigned = true;
-			}
-		}
-		
-		public void addChild(Term child)
-		{
-		    child.parent = this;
-		    childs.Add(child);
-		}
-		
-		public Term getChildAt(int index)
-		{
-		    return childs[index];
-		}
-		
-		public Term this[int index]
-		{
-			get
-			{
-				return childs[index]; 
-			}
-		}
-		
-		public VariableType VariableType
-		{
-			get
-			{
-				return variableType; 
-			}
-		}
-		
-		public TermType Type
-		{
-			get
-			{
-				return type; 
-			}
-			
-			set
-			{
-				type = value; 
-			}
-		}
-		
-		public List<Term> Childs
-		{
-			get
-			{
-			    return childs;
-			}
-		}
-	}
-	
+    /// <summary>
+    /// Узел дерева, когда используется значение переменной в качесве операнда
+    /// </summary>
+    public class VariableValue : SyntaxTreeNode
+    {
+        Lexem _VariableName;
+
+        public Lexem VariableName { get { return _VariableName; } }
+
+        public VariableValue(Lexem VariableName):base()
+        {
+            _VariableName = VariableName;
+        }
+
+        public override int GetStringNumber()
+        {
+            return _VariableName.StringNumber;
+        }
+
+        public override string Execute()
+        {
+            String Result = base.Execute();
+            if (Variables.Storage.ContainsKey(_VariableName))
+            {
+                Result = Variables.Storage[_VariableName];
+            }
+            else
+            {
+                Env.reporter.describeError("Неизвестный идентификатор " + _VariableName, 100100005, _VariableName.StringNumber, "Неверный идентификатор");
+                Result = "";
+            }
+            return Result;
+        }
+    }
+
+    public class AtomicValue : SyntaxTreeNode
+    {
+        private Lexem _Value;
+
+        public Lexem Value
+        {
+            get { return _Value; }
+            set { _Value = value; }
+        }
+
+        public AtomicValue(Lexem Value)
+        {
+            this._Value = Value;
+        }
+
+        public override string Execute()
+        {
+            return _Value.Value;
+        }
+
+        public override int GetStringNumber()
+        {
+            return _Value.StringNumber;
+        }
+    }
+
+    public class Block : SyntaxTreeNode
+    {
+        public Block():base()
+        {
+
+        }
+
+        public override string Execute()
+        {
+            String Result = base.Execute();
+            foreach (var child in _Childs)
+            {
+                Result = child.Execute();
+            }
+            return Result;
+        }
+    }
+
+    public class Error : SyntaxTreeNode
+    {
+        private Lexem _WrongLexem;
+
+        public Lexem WrongLexem
+        {
+            get { return _WrongLexem; }
+            set { _WrongLexem = value; }
+        }
+
+
+        public Error(Lexem WrongLexem):base()
+        {
+            _WrongLexem = WrongLexem;
+        }
+
+        public override string Execute()
+        {
+            return base.Execute();
+        }
+
+        public override int GetStringNumber()
+        {
+            if (_Childs.Count != 0)
+                return _Childs[0].GetStringNumber();
+            else
+                return 0;
+        }
+    }
+
+    public class FunctionCall : SyntaxTreeNode
+    {
+        private Lexem _FunctionName;
+
+        public Lexem FunctionName
+        {
+            get { return _FunctionName; }
+        }
+        
+
+        public FunctionCall(Lexem FuncName):base()
+        {
+            _FunctionName = FuncName;
+        }
+
+        public override string Execute()
+        {
+            List<FunctionArgument> args = new List<FunctionArgument>();
+            foreach (var cur in _Childs)
+            {
+                FunctionArgument arg = new FunctionArgument();
+                if (cur is AtomicValue)
+                {
+                    arg.argument = cur.Execute();
+                    if (variableValueIsString(arg.argument))
+                    {
+                        arg.ArgumentTypeEnum = ValueTypeEnum.String;
+                    }
+                    else
+                    {
+                        arg.ArgumentTypeEnum = ValueTypeEnum.Number;
+                    }
+                }
+                else if (cur is VariableValue)
+                {
+                    arg.ArgumentTypeEnum = ValueTypeEnum.Variable;
+                    arg.argument = cur.Execute();
+                    arg.argument = (cur as VariableValue).VariableName;
+                }
+                else
+                {
+                    arg.ArgumentTypeEnum = ValueTypeEnum.Variable;
+                    arg.argument = cur.Execute();
+                }
+                args.Add(arg);
+            }
+            FunctionResult result;
+            try
+            {
+                result = Functions.CallFunction(args, _FunctionName);
+                return result.Result;
+            }
+            catch (WrongArgumentCountException ex)
+            {
+                Env.reporter.describeError(ex.Message, 100100007, _FunctionName.StringNumber, "Неверное количество аргументов");
+                throw ex;
+            }
+            catch (WrongFormatArgumentException ex)
+            {
+                Env.reporter.describeError(ex.Message, 100100009, _FunctionName.StringNumber, "Неверный формат аргументов");
+                throw ex;
+            }
+            catch (UndefinedVariableException ex)
+            {
+                Env.reporter.describeError(ex.Message, 100100010, _FunctionName.StringNumber, "Не определена переменная");
+                throw ex;
+            }
+            catch (NotImplementedException ex)
+            {
+                InterpretatorEnvironment.Env.reporter.describeError(ex.Message, 100100008, _FunctionName.StringNumber, "Несуществующая функция");
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+    }
+
+    public class ArgumentList : SyntaxTreeNode
+    {
+
+    }
+
 	public enum TermType
 	{
 		///упростить существенно, оставить только нетерминалы
@@ -370,8 +772,7 @@ namespace programmatronCore
 		block,
 		error,
 		functionCall,
-		argumentList,
-		argumentListAddition,
+
 		none
 	}
 	
@@ -386,12 +787,9 @@ namespace programmatronCore
 	
 	public class SyntaxTreeGenerator
 	{
-		Term headOfSyntaxTree;
+		SyntaxTreeNode headOfSyntaxTree;
 		List<Lexem> lexems;
-		
-		//TO DO переместить в Term
-		
-		Term currentHead;
+        SyntaxTreeNode currentHead;
 		int lexemIndex = 0;
 		
 		public SyntaxTreeGenerator(List<Lexem> lexems)
@@ -407,7 +805,7 @@ namespace programmatronCore
 		
 		void initialize()
 		{
-		    headOfSyntaxTree = new Term(TermType.program);
+		    headOfSyntaxTree = new ProgramNode();
 		    currentHead = headOfSyntaxTree;
 		    lexems = new List<Lexem>();
 		    Variables.Storage = new Dictionary<String, String>();
@@ -422,7 +820,7 @@ namespace programmatronCore
 		public void generateTree()
 		{
 		    //clear();
-		    headOfSyntaxTree = new Term(TermType.program);
+            headOfSyntaxTree = new ProgramNode();
 		    currentHead = headOfSyntaxTree;
 		    Variables.Storage = new Dictionary<String, String>();
 		    //
@@ -435,67 +833,82 @@ namespace programmatronCore
 		    TermType typeOfNextTerm;
 		    do
 		    {
-		        //TO DO ... временное решение, в последсвии удалить отсюда и распихать по классу Term кучу функций инициализации//нет ничего более постоянного, чем временное
+		        //TODO ... временное решение, в последсвии удалить отсюда и распихать по классу Term кучу функций инициализации//нет ничего более постоянного, чем временное
 		        int oldLexemIndex = lexemIndex;
 		        typeOfNextTerm = getTermTypeInBlockByCurrentLexemIndex(oldLexemIndex, out lexemIndex);
 		
 		        if (typeOfNextTerm == TermType.variableDefinition)
 		        {
-		            Term child = new Term(currentHead, TermType.variableDefinition, getVariableTypeFromDefinition(oldLexemIndex));
-		            if (child.VariableType == VariableType.none)
-		            {
-		                //TO DO добавить в лог внутреннюю обработку рапортов и здесь сделать поддержку обработки ошибок
-                        InterpretatorEnveronment.Env.reporter.describeError(String.Format("Несуществующий тип указан в определении переменной {0}", child.Value), 100010003, lexems[lexemIndex].StringNumber, "Ошибка определения");
-		            }
-		            child.Name = getVariableNameFromDefinition(oldLexemIndex);
-		            currentHead.addChild(child);
+                    ExtractVariableDefinition(oldLexemIndex);
 		        }
 		        else if (typeOfNextTerm == TermType.variableDefinitionAssignment)
 		        {
-		            Term child = new Term(currentHead, TermType.variableDefinitionAssignment, getVariableTypeFromDefinitionAssignment(oldLexemIndex));
-		            ///////TO DO refactoring
-		            int parseStartIndex = oldLexemIndex + 3;
-		            int parseEndIndex = lexemIndex - 1;
-		            if (child.VariableType == VariableType.none)
-		            {
-		                //TO DO добавить в лог внутреннюю обработку рапортов и здесь сделать поддержку обработки ошибок
-                        InterpretatorEnveronment.Env.reporter.describeError(String.Format("Несуществующий тип указан в определении и присвоении переменной {0}", child.Value), 100010003, lexems[lexemIndex].StringNumber, "Ошибка определения");
-                    }
-		            child.Name = getVariableNameFromDefinition(oldLexemIndex);
-		            parseValueLexemToTree(child, parseStartIndex, parseEndIndex);
-		            currentHead.addChild(child);
-		
+                    ExtractVariableDefinitionAssignment(oldLexemIndex);
 		        }
 		        else if (typeOfNextTerm == TermType.variableAssignment)
 		        {
-		            Term child = new Term(currentHead, TermType.variableAssignment);
-		            ////////TO DO refactoring
-		            int parseStartIndex = oldLexemIndex + 2;
-		            int parseEndIndex = lexemIndex - 1;
-		            child.Name = getVariableNameFromAssignment(oldLexemIndex);
-		            parseValueLexemToTree(child, parseStartIndex, parseEndIndex);
-		            currentHead.addChild(child);
+                    ExctractVariableAssingment(oldLexemIndex);
 		        }
 		        else if(typeOfNextTerm == TermType.functionCall)
 		        {
-		            Term child = new Term();
-		            child.Name = getFunctionNameFromCall(oldLexemIndex);
-		            child.Type = TermType.functionCall;
-		            parseArgumentListFromFunctionCall(child, oldLexemIndex+2, lexemIndex-2);
-		            currentHead.addChild(child);
+                    ExtractFunctionCall(oldLexemIndex);
 		        }
 		        else if (typeOfNextTerm == TermType.error)
 		        {
                     if (lexemIndex == -1)
                         lexemIndex = 0;
-                    InterpretatorEnveronment.Env.reporter.describeError("Неизвестная синтаксическая структура", 100110004, lexems[lexemIndex].StringNumber, "Синтаксическая ошибка");
+                    InterpretatorEnvironment.Env.reporter.describeError("Неизвестная синтаксическая структура", 100110004, lexems[lexemIndex].StringNumber, "Синтаксическая ошибка");
                     return;
 		        }
 		        lexemIndex++;
 		    } while ((typeOfNextTerm != TermType.none || typeOfNextTerm != TermType.error) && lexemIndex < lexems.Count - 1);
 		}
+
+        private void ExtractFunctionCall(int oldLexemIndex)
+        {
+            FunctionCall child = new FunctionCall(getFunctionNameFromCall(oldLexemIndex));
+            parseArgumentListFromFunctionCall(child, oldLexemIndex + 2, lexemIndex - 2);
+            currentHead.Childs.Add(child);
+        }
+
+        private void ExctractVariableAssingment(int oldLexemIndex)
+        {
+            int parseStartIndex = oldLexemIndex + 2;
+            int parseEndIndex = lexemIndex - 1;
+            VariableAssignment child = new VariableAssignment(getVariableNameFromAssignment(oldLexemIndex));
+            parseValueLexemToTree(child, parseStartIndex, parseEndIndex);
+            currentHead.Childs.Add(child);
+        }
+
+        private void ExtractVariableDefinitionAssignment(int oldLexemIndex)
+        {
+            int parseStartIndex = oldLexemIndex + 3;
+            int parseEndIndex = lexemIndex - 1;
+            VariableDefinitionAssignment child = new VariableDefinitionAssignment(getVariableNameFromDefinition(oldLexemIndex));
+            ///////TODO refactoring
+
+            if (getVariableTypeFromDefinitionAssignment(oldLexemIndex) == VariableType.none)
+            {
+                //TODO добавить в лог внутреннюю обработку рапортов и здесь сделать поддержку обработки ошибок
+                InterpretatorEnvironment.Env.reporter.describeError(String.Format("Несуществующий тип указан в определении и присвоении переменной {0}", child.VariableName), 100010003, lexems[lexemIndex].StringNumber, "Ошибка определения");
+            }
+            parseValueLexemToTree(child, parseStartIndex, parseEndIndex);
+            currentHead.Childs.Add(child);
+        }
+
+        private void ExtractVariableDefinition(int oldLexemIndex)
+        {
+            VariableDefinition child = new VariableDefinition(getVariableNameFromDefinition(oldLexemIndex));
+            if (getVariableTypeFromDefinition(oldLexemIndex) == VariableType.none)
+            {
+                //TODO добавить в лог внутреннюю обработку рапортов и здесь сделать поддержку обработки ошибок
+                InterpretatorEnvironment.Env.reporter.describeError(String.Format("Несуществующий тип указан в определении переменной {0}", child.VariableName), 100010003, lexems[lexemIndex].StringNumber, "Ошибка определения");
+            }
+            currentHead.Childs.Add(child);
+            child.Parent = currentHead;
+        }
 		
-		private void parseArgumentListFromFunctionCall(Term functionCallTerm,int start,int end)
+		private void parseArgumentListFromFunctionCall(FunctionCall functionCallTerm,int start,int end)
 		{
 		    int leftComma=-1, rightComma = -1;
 		    leftComma = findFirstSymbol(",", start, end);
@@ -669,52 +1082,75 @@ namespace programmatronCore
 		    }
 		}
 		
-		private void parseValueLexemToTree(Term root, int startIndex, int endIndex)
+		private void parseValueLexemToTree(SyntaxTreeNode root, int startIndex, int endIndex)
 		{
-		    Term subTerm = new Term();
 		    bool inParentheses = parenthesesCorrection(ref startIndex, ref endIndex);
 		    if (endIndex == startIndex && (valueIsString(startIndex) || valueIsNumber(startIndex)))
 		    {
-		        subTerm.Value = lexems[startIndex];
-		        subTerm.Type = TermType.atomicValue;
-		        root.addChild(subTerm);
+                root.Childs.Add(new AtomicValue(lexems[startIndex]));
 		        return;
 		    }
 		    else if(endIndex == startIndex && lexemIsIdentifier(endIndex))
 		    {
-		        subTerm.Name = lexems[endIndex];
-		        subTerm.Type = TermType.variableValue;
-		        root.addChild(subTerm);
+                root.Childs.Add(new VariableValue(lexems[endIndex]));
 		        return;
 		    }
-            else if(lexemsIsFunctionCall(startIndex,endIndex))
+            else if (lexemsIsFunctionCall(startIndex, endIndex))
             {
-                subTerm.Name = lexems[startIndex];
-                subTerm.Type = TermType.functionCall;
-                root.addChild(subTerm);
+                root.Childs.Add(new FunctionCall(lexems[startIndex]));
                 return;
             }
-		    int basicPoint = getBasicPoint(startIndex, endIndex);
-		    int subBasicPoint = getSubBasicPoint(startIndex, endIndex);
-		    if (basicPoint != -1)
-		    {
-		        parseLeftRightTerms(startIndex, endIndex,ref subTerm, basicPoint);
-		        root.addChild(subTerm);
-		        return;
-		    }else if(subBasicPoint != -1)
-		    {
-		        parseLeftRightTerms(startIndex, endIndex,ref subTerm, subBasicPoint);
-		        root.addChild(subTerm);
-		        return;
-		    }
+            else
+            {
+                ExtractLeftAndRightParts(root, startIndex, endIndex);
+            }
 		}
+
+        private void ExtractLeftAndRightParts(SyntaxTreeNode root, int startIndex, int endIndex)
+        {
+            int basicPoint = getBasicPoint(startIndex, endIndex);
+            int subBasicPoint = getSubBasicPoint(startIndex, endIndex);
+            if (basicPoint != -1)
+            {
+                root.Childs.Add(parseLeftRightNodes(startIndex, endIndex, basicPoint));
+                return;
+            }
+            else if (subBasicPoint != -1)
+            {
+                root.Childs.Add(parseLeftRightNodes(startIndex, endIndex, subBasicPoint));
+                return;
+            }
+        }
 		
-		private void parseLeftRightTerms(int startIndex, int endIndex,ref Term subTerm, int basicPoint)
+		private SyntaxTreeNode parseLeftRightNodes(int startIndex, int endIndex, int basicPoint)
 		{
-		    parseValueLexemToTree(subTerm, startIndex, basicPoint - 1);
-		    parseValueLexemToTree(subTerm, basicPoint + 1, endIndex);
-		    subTerm.Type = ProgrammatronTables.arithmeticSymbolToTermType[lexems[basicPoint]];
+		    switch (ProgrammatronTables.arithmeticSymbolToTermType[lexems[basicPoint]])
+            {
+                case TermType.mathAddition:
+                    MathAddition mathA = new MathAddition();
+                    fillAllAriphmeticNodes(mathA,startIndex,endIndex,basicPoint);
+                    return mathA;
+                case TermType.mathDivision:
+                    MathDivision mathD = new MathDivision();
+                    fillAllAriphmeticNodes(mathD, startIndex, endIndex, basicPoint);
+                    return mathD;
+                case TermType.mathMultiplication:
+                    MathMultiplication mathM = new MathMultiplication();
+                    fillAllAriphmeticNodes(mathM, startIndex, endIndex, basicPoint);
+                    return mathM;
+                case TermType.mathSubtraction:
+                    MathSubstraction mathS = new MathSubstraction();
+                    fillAllAriphmeticNodes(mathS, startIndex, endIndex, basicPoint);
+                    return mathS;
+            }
+            throw new Exception();
 		}
+
+        private void fillAllAriphmeticNodes(SyntaxTreeNode subNode, int startIndex, int endIndex, int basicPoint)
+        {
+		    parseValueLexemToTree(subNode, startIndex, basicPoint - 1);
+		    parseValueLexemToTree(subNode, basicPoint + 1, endIndex);
+        }
 		
 		private int getBasicPoint(int startIndex, int endIndex)
 		{
@@ -971,349 +1407,30 @@ namespace programmatronCore
             }
             catch(Exception ex)
             {
-                InterpretatorEnveronment.Env.log.message("Исправьте указанную ошибку, затем снова запустите");
+                InterpretatorEnvironment.Env.log.message("Исправьте указанную ошибку, затем снова запустите");
             }
 		}
 		
 		/// <summary>
 		/// Функция запускается во время выполнения кода. TO DO выделить функции выполнения кода в отдельный класс
 		/// </summary>
-		private void doProcessing(Term workingTerm)
+		private void doProcessing(SyntaxTreeNode workingTerm)
 		{
             try
             {
-                if (workingTerm.Type == TermType.program)
-                {
-                    //TO DO вынести этот код отдельно ПОСЛЕ выделения всей функции в отдельный класс
-                    for (int i = 0; i < workingTerm.Childs.Count; i++)
-                    {
-                        doProcessing(workingTerm.Childs[i]);
-                    }
+                workingTerm.Execute();
 #if DEBUG
 		        foreach (KeyValuePair<string, string> current in Variables.Storage)
 		            VMEnv.Env.log.message(current.Key + "=" + current.Value);
 #endif
 
-                }
-                if (workingTerm.Type == TermType.variableAssignment)
-                {
-                    if (Variables.Storage.ContainsKey(workingTerm.Name))
-                    {
-                        Variables.Storage[workingTerm.Name] = calculateValue(workingTerm);
-                    }
-                    else
-                    {
-                        InterpretatorEnveronment.Env.reporter.describeError("Неизвестный идентификатор " + workingTerm.Name, 100100005, workingTerm.Name.StringNumber, "Ошибка присвоения");
-                    }
-                }
-                if (workingTerm.Type == TermType.variableDefinition)
-                {
-                    Variables.Storage.Add(workingTerm.Name, "");
-                }
-                if (workingTerm.Type == TermType.variableDefinitionAssignment)
-                {
-                    Variables.Storage.Add(workingTerm.Name, calculateValue(workingTerm));
-                }
-                if (workingTerm.Type == TermType.functionCall)
-                {
-                    functionCaller(workingTerm);
-                }
+
             }
             catch(Exception ex)
             {
-                InterpretatorEnveronment.Env.log.message("Выполнение прервано на этапе обработки "+workingTerm.Type.ToString());
+                Env.log.message("Выполнение прервано на этапе обработки. "+ex.ToString());
                 throw ex;
             }
-		}
-		
-		FunctionResult functionCaller(Term term)
-		{
-            List<FunctionArgument> args = new List<FunctionArgument>();
-            foreach(Term cur in term.Childs)
-            {
-                FunctionArgument arg=new FunctionArgument();
-                arg.argument = calculateValue(cur);
-                if(cur.Type==TermType.atomicValue)
-                {
-                    if (isString(arg.argument))
-                        arg.ArgumentTypeEnum=ValueTypeEnum.String;
-                    else
-                        arg.ArgumentTypeEnum=ValueTypeEnum.Number;
-                }else if(cur.Type==TermType.variableValue){
-                    arg.ArgumentTypeEnum=ValueTypeEnum.Variable;
-                    arg.argument = cur.Name;
-                }
-                else
-                {
-                    arg.ArgumentTypeEnum = ValueTypeEnum.Variable;
-                }
-                args.Add(arg);
-            }
-            FunctionResult result;
-            try
-            {
-                result = Functions.CallFunction(args, term.Name);
-                return result;
-            }catch (WrongArgumentCountException ex)
-            {
-                Env.reporter.describeError(ex.Message, 100100007, term.Name.StringNumber, "Неверное количество аргументов");
-                throw ex;
-            }catch(WrongFormatArgumentException ex)
-            {
-                Env.reporter.describeError(ex.Message, 100100009, term.Name.StringNumber, "Неверный формат аргументов");
-                throw ex;
-            }catch(UndefinedVariableException ex)
-            {
-                Env.reporter.describeError(ex.Message, 100100010, term.Name.StringNumber, "Не определена переменная");
-                throw ex;
-            }
-            catch(NotImplementedException ex)
-            {
-		        InterpretatorEnveronment.Env.reporter.describeError(ex.Message,100100008,term.Name.StringNumber,"Несуществующая функция");
-                throw ex;
-		    }
-            catch(Exception ex)
-            {
-                throw ex;
-            }
-		}
-		
-		String calculateValue(Term term)
-		{
-            try
-            {
-
-
-                if (term.Type == TermType.variableAssignment || term.Type == TermType.variableDefinitionAssignment)
-                {
-                    if (term.Childs.Count == 1)
-                        return calculateValue(term.Childs[0]);
-                    else
-                    {
-                        InterpretatorEnveronment.Env.reporter.describeError("Неверно построено синтаксическое дерево. Обратитесь в поддержку.", 100119999, term.Childs[0].Name.StringNumber, "Внутренняя ошибка");
-                        return "";
-                    }
-                }
-                else if (term.Type == TermType.mathAddition)
-                {
-                    //TO DO добавить поддержку длинной арифметики
-                    return calculateOperation(term, operationAdd);
-                }
-                else if (term.Type == TermType.mathMultiplication)
-                {
-                    //TO DO добавить поддержку длинной арифметики
-                    return calculateOperation(term, operationMul);
-                }
-                else if (term.Type == TermType.mathSubtraction)
-                {
-                    //TO DO добавить поддержку длинной арифметики
-                    return calculateOperation(term, operationDec);
-                }
-                else if (term.Type == TermType.mathDivision)
-                {
-                    //TO DO добавить поддержку длинной арифметики
-                    return calculateOperation(term, operationDiv);
-                }
-                else if (term.Type == TermType.atomicValue)
-                {
-                    return term.Value;
-                }
-                else if (term.Type == TermType.variableValue)
-                {
-                    if (Variables.Storage.ContainsKey(term.Name))
-                    {
-                        return Variables.Storage[term.Name];
-                    }
-                    else
-                    {
-                        InterpretatorEnveronment.Env.reporter.describeError("Неизвестный идентификатор " + term.Name, 100100005, term.Name.StringNumber, "Неверный идентификатор");
-                        return "";
-                    }
-                }
-                else if (term.Type == TermType.functionCall)
-                {
-                    FunctionResult res = functionCaller(term);
-                    return res.Result;
-                }
-                else
-                {
-                    InterpretatorEnveronment.Env.reporter.describeError("Выполнение оператора не реализовано " + term.Name, 100100005, term.Name.StringNumber, "Выполнение не реализовано");
-                    return "";
-                }
-            }
-            catch(Exception ex)
-            {
-                throw ex;
-            }
-		}
-		
-        //TO DO Декостелировать тут
-		private string calculateOperation(Term term, Func<String, String, String> operation)
-		{
-		    if (term.Childs.Count == 2)
-		    {
-		        String leftValue = calculateValue(term.Childs[0]);
-		        String rightValue = calculateValue(term.Childs[1]);
-		        return operation(leftValue, rightValue);
-		    }
-		    if(term.Childs.Count == 1&&(term.Type==TermType.mathSubtraction||term.Type==TermType.mathAddition))
-		    {
-		        String leftValue = "0";
-		        String rightValue = calculateValue(term.Childs[0]);
-		        return operation(leftValue,rightValue);
-		    }
-		    if (term.Childs.Count == 1 && (term.Type == TermType.mathDivision))
-		    {
-		        String leftValue = "1";
-		        String rightValue = calculateValue(term.Childs[0]);
-		        return operation(leftValue,rightValue);
-		    }
-            InterpretatorEnveronment.Env.reporter.describeError("Неверно построено синтаксическое дерево. Обратитесь в поддержку.", 100119999, term.Childs[0].Name.StringNumber, "Внутренняя ошибка");
-            return "";
-        }
-		
-		private String operationMul(String leftValue, String rightValue)
-		{
-		
-		    float leftFloatValue = 0;
-		    float rightFloatValue = 0;
-		    int leftIntValue = 0;
-		    int rightIntValue = 0;
-		    if (variableValueIsString(leftValue) || variableValueIsString(rightValue))
-		    {
-                InterpretatorEnveronment.Env.reporter.describeError("Выполнение оператора не реализовано для " + leftValue + rightValue+". Нельзя умножать строки", 100100005, -1, "Выполнение не реализовано");
-            }
-		    if (float.TryParse(leftValue, NumberStyles.Any, new CultureInfo("en-US"), out leftFloatValue) && float.TryParse(rightValue, NumberStyles.Any, new CultureInfo("en-US"), out rightFloatValue))
-		    {
-		        return (leftFloatValue * rightFloatValue).ToString(new CultureInfo("en-US"));
-		    }
-
-            InterpretatorEnveronment.Env.reporter.describeError("Аргументы не подходят для указанной операции для " + leftValue + rightValue, 100100005, -1, "Неверные аргументы");
-            return "";
-        }
-		
-		private String operationDiv(String leftValue, String rightValue)
-		{
-		
-		    float leftFloatValue = 0;
-		    float rightFloatValue = 0;
-		    int leftIntValue = 0;
-		    int rightIntValue = 0;
-		    if (variableValueIsString(leftValue) || variableValueIsString(rightValue))
-		    {
-		        //что-то из операндов строки, складываем как строки
-		        throw new ArgumentException("Нельзя делить строки");
-		    }
-		    if (float.TryParse(leftValue, NumberStyles.Any, new CultureInfo("en-US"), out leftFloatValue) && float.TryParse(rightValue, NumberStyles.Any, new CultureInfo("en-US"), out rightFloatValue))
-		    {
-		        return (leftFloatValue / rightFloatValue).ToString(new CultureInfo("en-US"));
-		    }
-
-            InterpretatorEnveronment.Env.reporter.describeError("Аргументы не подходят для указанной операции для " + leftValue + rightValue, 100100005, -1, "Неверные аргументы");
-            return "";
-        }
-		
-		private String operationDec(String leftValue, String rightValue)
-		{
-		
-		    float leftFloatValue = 0;
-		    float rightFloatValue = 0;
-		    int leftIntValue = 0;
-		    int rightIntValue = 0;
-		    if (variableValueIsString(leftValue) || variableValueIsString(rightValue))
-		    {
-		        //что-то из операндов строки, складываем как строки
-                InterpretatorEnveronment.Env.reporter.describeError("Выполнение оператора не реализовано для " + leftValue + rightValue + ". Нельзя умножать строки", 100100005, -1, "Выполнение не реализовано");
-            }
-		    if (float.TryParse(leftValue, NumberStyles.Any, new CultureInfo("en-US"), out leftFloatValue) && float.TryParse(rightValue, NumberStyles.Any, new CultureInfo("en-US"), out rightFloatValue))
-		    {
-		        return (leftFloatValue - rightFloatValue).ToString(new CultureInfo("en-US"));
-		    }
-            InterpretatorEnveronment.Env.reporter.describeError("Аргументы не подходят для указанной операции для " + leftValue + rightValue, 100100005, -1, "Неверные аргументы");
-            return "";
-        }
-		
-		private String operationAdd(String leftValue, String rightValue)
-		{
-		
-		    float leftFloatValue = 0;
-		    float rightFloatValue = 0;
-		    int leftIntValue = 0;
-		    int rightIntValue = 0;
-		    if (variableValueIsString(leftValue) || variableValueIsString(rightValue))
-		    {
-		        //что-то из операндов строки, складываем как строки
-		        
-		        return buildStringSumm(leftValue, rightValue);//TO DO
-		    }
-		    if (float.TryParse(leftValue, NumberStyles.Any, new CultureInfo("en-US"), out leftFloatValue) && float.TryParse(rightValue, NumberStyles.Any, new CultureInfo("en-US"), out rightFloatValue))
-		    {
-		        return (leftFloatValue + rightFloatValue).ToString(new CultureInfo("en-US"));
-		    }
-
-            InterpretatorEnveronment.Env.reporter.describeError("Аргументы не подходят для указанной операции для " + leftValue + rightValue, 100100005, -1, "Неверные аргументы");
-            return "";
-        }
-		
-		String buildStringSumm(String a,String b)
-		{
-            if (a.Length == 0)
-                return b;
-            if (b.Length == 0)
-                return a;
-		    String result = "";
-		    int i;
-		    if(a[0]=='\"')
-		    {
-		        result += a[0];
-		        i=1;
-		        while(a[i]!='\"')
-		        {
-		            result += a[i];
-		            i++;
-		        }
-		    }
-		    else
-		    {
-		        result += '\"';
-		        i=0;
-		        while(i<a.Length)
-		        {
-		            result += a[i];
-		            i++;
-		        }
-		    }
-		    if (b[0] == '\"')
-		    {
-		        i = 1;
-		        while (i < b.Length)
-		        {
-		            result += b[i];
-		            i++;
-		        }
-		    }
-		    else
-		    {
-		        i = 0;
-		        while (i < b.Length)
-		        {
-		            result += b[i];
-		            i++;
-		        }
-		        result += '\"';
-		    }
-		    return result;
-		}
-		
-		String getStringVariableWithoutQuotes(String s)
-		{
-            if (s.Length == 0)
-                return "";
-		    if(s[0]=='\"'&&s[s.Length-1]=='\"')
-		    {
-		        return s.Remove(0,1).Remove(s.Length - 2, 1);
-		    }
-		    return s;
 		}
 	}
 }

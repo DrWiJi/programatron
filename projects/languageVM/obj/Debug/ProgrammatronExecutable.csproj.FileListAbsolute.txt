@@ -1,1 +1,2 @@
 D:\Repos\programatron\projects\languageVM\obj\Debug\ProgrammatronExecutable.csprojResolveAssemblyReference.cache
+K:\Хобби\Программатрон\programmatron\projects\languageVM\obj\Debug\ProgrammatronExecutable.csprojResolveAssemblyReference.cache

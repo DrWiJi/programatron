@@ -35,9 +35,18 @@
     </DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Windows" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Forms.DataVisualization" />
@@ -52,17 +61,23 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core.cs" />
-    <Compile Include="LanguageMachine.cs" />
+    <Compile Include="SecondarySystem.cs" />
     <Compile Include="ProgrammatronTables.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="unittests.cs" />
-    <Compile Include="VMenvironment.cs" />
+    <Compile Include="Environment.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FunctionsRealization\FunctionsRealization.csproj">
       <Project>{fb8298c0-2ff0-4859-b9b6-d8c8ccdaca42}</Project>
       <Name>FunctionsRealization</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

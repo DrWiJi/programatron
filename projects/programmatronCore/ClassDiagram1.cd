@@ -1,0 +1,200 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="programmatronCore.LexemAnalyzer" Collapsed="true">
+    <Position X="0.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgEAAEAEAASAAAkAABAACQAAqgAAICEEAIACAIA=</HashCode>
+      <FileName>Core.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="programmatronCore.SyntaxTreeGenerator" Collapsed="true">
+    <Position X="2.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>hxKCQBKBECADQOoQIAMCiSRAoAIAAYAASSABRSAAAWg=</HashCode>
+      <FileName>Core.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="programmatronCore.Constants" Collapsed="true">
+    <Position X="6.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAg=</HashCode>
+      <FileName>SecondarySystem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="programmatronCore.Parameters" Collapsed="true">
+    <Position X="6.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAEAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SecondarySystem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="programmatronCore.SiruationInSourceCodeReport" Collapsed="true">
+    <Position X="4.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAKAAgAAAAIAAAAAAAACAAAAAAAAA=</HashCode>
+      <FileName>SecondarySystem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="programmatronCore.WarningReport" Collapsed="true">
+    <Position X="4.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAABAAAAAAAA=</HashCode>
+      <FileName>SecondarySystem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="programmatronCore.ErrorReport" Collapsed="true">
+    <Position X="6.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAAAEAAAAAAAAAAAAAAAAAABAAAAAAAA=</HashCode>
+      <FileName>SecondarySystem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="programmatronCore.InfoReport" Collapsed="true">
+    <Position X="2.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAABAAAAAAAA=</HashCode>
+      <FileName>SecondarySystem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="programmatronCore.Reporter" Collapsed="true">
+    <Position X="8.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAEAAAAAEAAAAAAACAAAAAAAAAACAAAAA=</HashCode>
+      <FileName>SecondarySystem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="programmatronCore.Lexem" Collapsed="true">
+    <Position X="8.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAABAAAAAAAECAAAAARAAAAABAAAAACgAAAAADA=</HashCode>
+      <FileName>SecondarySystem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="programmatronCore.SyntaxTreeNode">
+    <Position X="14" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEBAAAAAAIQAAAAAQABAAAAAAAAACAAABAEAAgA=</HashCode>
+      <FileName>Core.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="programmatronCore.VariableDefinition" Collapsed="true">
+    <Position X="5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAEAAAAAAAAAAAAAAAAABAAAEAA=</HashCode>
+      <FileName>Core.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="programmatronCore.VariableAssignment" Collapsed="true">
+    <Position X="11.75" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAEAAAAAAAAAAAAAAAAABAAAEAA=</HashCode>
+      <FileName>Core.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="programmatronCore.VariableDefinitionAssignment" Collapsed="true">
+    <Position X="18.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAEAAAAAAAAAAAAAAAAABAAAEAA=</HashCode>
+      <FileName>Core.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="programmatronCore.ProgramNode" Collapsed="true">
+    <Position X="25.25" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Core.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="programmatronCore.MathAddition" Collapsed="true">
+    <Position X="0.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>Core.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="programmatronCore.MathSubstraction" Collapsed="true">
+    <Position X="7.25" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>Core.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="programmatronCore.MathDivision">
+    <Position X="15.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>Core.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="programmatronCore.MathMultiplication" Collapsed="true">
+    <Position X="20.75" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>Core.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="programmatronCore.VariableValue" Collapsed="true">
+    <Position X="27.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAEAAAAAAAAAAAAAAAAABAAAEAA=</HashCode>
+      <FileName>Core.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="programmatronCore.AtomicValue" Collapsed="true">
+    <Position X="2.75" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAABQAAAAAAAAAAAAAAAAAAAAgBAAAAAA=</HashCode>
+      <FileName>Core.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="programmatronCore.Block" Collapsed="true">
+    <Position X="9.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Core.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="programmatronCore.Error" Collapsed="true">
+    <Position X="16.25" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAABAAQAAAAAAAAAAAAAAAAAAAAABAAAABA=</HashCode>
+      <FileName>Core.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="programmatronCore.FunctionCall" Collapsed="true">
+    <Position X="23" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAACAAAAAAAAAAAAAAAAEAAAAAA=</HashCode>
+      <FileName>Core.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="programmatronCore.ArgumentList" Collapsed="true">
+    <Position X="29.75" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Core.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="programmatronCore.InterpretatorParameters" Collapsed="true">
+    <Position X="4.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAAABAAEgAAEAAAAAAAAAIAAAAAAAIAgAiA=</HashCode>
+      <FileName>SecondarySystem.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Enum Name="programmatronCore.TermType" Collapsed="true">
+    <Position X="0.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAEAAAgBIUAAAAAFAAAAAAAAAAAAAAAAQAAAAJBE=</HashCode>
+      <FileName>Core.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="programmatronCore.VariableType" Collapsed="true">
+    <Position X="2.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAAAAAAAAAAAAAAAAQABAAAAAAIAAAEAAAA=</HashCode>
+      <FileName>Core.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

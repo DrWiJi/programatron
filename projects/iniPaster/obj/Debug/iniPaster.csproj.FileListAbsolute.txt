@@ -8,3 +8,8 @@ D:\Repos\programatron\projects\iniPaster\bin\Debug\iniPaster.pdb
 D:\Repos\programatron\projects\iniPaster\obj\Debug\iniPaster.csprojResolveAssemblyReference.cache
 D:\Repos\programatron\projects\iniPaster\obj\Debug\iniPaster.dll
 D:\Repos\programatron\projects\iniPaster\obj\Debug\iniPaster.pdb
+K:\Хобби\Программатрон\programmatron\projects\iniPaster\bin\Debug\iniPaster.dll
+K:\Хобби\Программатрон\programmatron\projects\iniPaster\bin\Debug\iniPaster.pdb
+K:\Хобби\Программатрон\programmatron\projects\iniPaster\obj\Debug\iniPaster.csprojResolveAssemblyReference.cache
+K:\Хобби\Программатрон\programmatron\projects\iniPaster\obj\Debug\iniPaster.dll
+K:\Хобби\Программатрон\programmatron\projects\iniPaster\obj\Debug\iniPaster.pdb

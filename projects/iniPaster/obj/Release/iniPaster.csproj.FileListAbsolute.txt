@@ -7,3 +7,13 @@ D:\Repos\programatron\projects\iniPaster\bin\Release\iniPaster.dll
 D:\Repos\programatron\projects\iniPaster\bin\Release\iniPaster.pdb
 D:\Repos\programatron\projects\iniPaster\obj\Release\iniPaster.dll
 D:\Repos\programatron\projects\iniPaster\obj\Release\iniPaster.pdb
+C:\Users\2sera\Documents\Хобби\Программатрон\programmatron\projects\iniPaster\bin\Release\iniPaster.dll
+C:\Users\2sera\Documents\Хобби\Программатрон\programmatron\projects\iniPaster\bin\Release\iniPaster.pdb
+C:\Users\2sera\Documents\Хобби\Программатрон\programmatron\projects\iniPaster\obj\Release\iniPaster.csprojResolveAssemblyReference.cache
+C:\Users\2sera\Documents\Хобби\Программатрон\programmatron\projects\iniPaster\obj\Release\iniPaster.dll
+C:\Users\2sera\Documents\Хобби\Программатрон\programmatron\projects\iniPaster\obj\Release\iniPaster.pdb
+K:\Хобби\Программатрон\programmatron\projects\iniPaster\bin\Release\iniPaster.dll
+K:\Хобби\Программатрон\programmatron\projects\iniPaster\bin\Release\iniPaster.pdb
+K:\Хобби\Программатрон\programmatron\projects\iniPaster\obj\Release\iniPaster.csprojResolveAssemblyReference.cache
+K:\Хобби\Программатрон\programmatron\projects\iniPaster\obj\Release\iniPaster.dll
+K:\Хобби\Программатрон\programmatron\projects\iniPaster\obj\Release\iniPaster.pdb

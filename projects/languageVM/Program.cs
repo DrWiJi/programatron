@@ -6,7 +6,7 @@ using System.IO;
 using programmatronCore;
 using testing;
 using testingDLL;
-using InterpretatorEnveronment;
+using InterpretatorEnvironment;
 using System.Windows;
 
 namespace languageVM
@@ -82,8 +82,9 @@ namespace languageVM
         static void applicationInitialize(string[] args)
         {
             fillInterpretatorParameters(args);
-            InterpretatorEnveronment.Env.log = new Log();
-            InterpretatorEnveronment.Env.reporter = new Reporter();
+            Env.log = new Log();
+            Env.reporter = new Reporter();
+            Env.Debug = new DebugMode();
         }
 
 #if DEBUG

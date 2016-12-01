@@ -16,3 +16,6 @@ D:\Repos\programatron\projects\WindowsFormsApplication1\obj\Debug\ProgrammatronI
 D:\Repos\programatron\projects\WindowsFormsApplication1\obj\Debug\programmatronIDE.csproj.GenerateResource.Cache
 D:\Repos\programatron\projects\WindowsFormsApplication1\obj\Debug\ProgrammatronIDE.exe
 D:\Repos\programatron\projects\WindowsFormsApplication1\obj\Debug\ProgrammatronIDE.pdb
+K:\Хобби\Программатрон\programmatron\projects\WindowsFormsApplication1\bin\Debug\ProgrammatronIDE.exe.config
+K:\Хобби\Программатрон\programmatron\projects\WindowsFormsApplication1\obj\Debug\ProgrammatronIDE.exe
+K:\Хобби\Программатрон\programmatron\projects\WindowsFormsApplication1\obj\Debug\ProgrammatronIDE.pdb

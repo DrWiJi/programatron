@@ -3,3 +3,8 @@ D:\Repos\programatron\projects\FunctionsRealization\bin\Debug\FunctionsRealizati
 D:\Repos\programatron\projects\FunctionsRealization\obj\Debug\FunctionsRealization.csprojResolveAssemblyReference.cache
 D:\Repos\programatron\projects\FunctionsRealization\obj\Debug\FunctionsRealization.dll
 D:\Repos\programatron\projects\FunctionsRealization\obj\Debug\FunctionsRealization.pdb
+K:\Хобби\Программатрон\programmatron\projects\FunctionsRealization\bin\Debug\FunctionsRealization.dll
+K:\Хобби\Программатрон\programmatron\projects\FunctionsRealization\bin\Debug\FunctionsRealization.pdb
+K:\Хобби\Программатрон\programmatron\projects\FunctionsRealization\obj\Debug\FunctionsRealization.csprojResolveAssemblyReference.cache
+K:\Хобби\Программатрон\programmatron\projects\FunctionsRealization\obj\Debug\FunctionsRealization.dll
+K:\Хобби\Программатрон\programmatron\projects\FunctionsRealization\obj\Debug\FunctionsRealization.pdb

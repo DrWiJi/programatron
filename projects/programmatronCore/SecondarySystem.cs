@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using InterpretatorEnveronment;
+using InterpretatorEnvironment;
 
 
 namespace programmatronCore
@@ -101,7 +101,7 @@ namespace programmatronCore
 		public static WarningReport create(String description,int code,int numberOfString, String stringWithWarning)
 		{
 		    WarningReport report = new WarningReport(description, code, numberOfString, stringWithWarning);
-		    InterpretatorEnveronment.Env.log.message("Warning", report.ToString());
+		    InterpretatorEnvironment.Env.log.message("Warning", report.ToString());
 		    return report;
 		}
 		
@@ -125,7 +125,7 @@ namespace programmatronCore
 		public static ErrorReport create(String description,int code,int numberOfString, String stringWithError)
 		{
 		    ErrorReport report = new ErrorReport(description, code, numberOfString, stringWithError);
-		    InterpretatorEnveronment.Env.log.message("Error", report.ToString());
+		    InterpretatorEnvironment.Env.log.message("Error", report.ToString());
 		    return report;
 		}
 		
@@ -163,7 +163,7 @@ namespace programmatronCore
 		public static InfoReport create(String description,int numberOfString,String pointedString)
 		{
 		    InfoReport report = new InfoReport(description, numberOfString, pointedString);
-		    InterpretatorEnveronment.Env.log.message("Info",report.ToString());
+		    InterpretatorEnvironment.Env.log.message("Info",report.ToString());
 		    return report;
 		}
 		
@@ -271,4 +271,6 @@ namespace programmatronCore
             }
         }
     }
+
+
 }

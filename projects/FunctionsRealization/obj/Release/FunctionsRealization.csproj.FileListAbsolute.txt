@@ -3,3 +3,13 @@ D:\Repos\programatron\projects\FunctionsRealization\bin\Release\FunctionsRealiza
 D:\Repos\programatron\projects\FunctionsRealization\obj\Release\FunctionsRealization.dll
 D:\Repos\programatron\projects\FunctionsRealization\obj\Release\FunctionsRealization.pdb
 D:\Repos\programatron\projects\FunctionsRealization\obj\Release\FunctionsRealization.csprojResolveAssemblyReference.cache
+C:\Users\2sera\Documents\Хобби\Программатрон\programmatron\projects\FunctionsRealization\bin\Release\FunctionsRealization.dll
+C:\Users\2sera\Documents\Хобби\Программатрон\programmatron\projects\FunctionsRealization\bin\Release\FunctionsRealization.pdb
+C:\Users\2sera\Documents\Хобби\Программатрон\programmatron\projects\FunctionsRealization\obj\Release\FunctionsRealization.csprojResolveAssemblyReference.cache
+C:\Users\2sera\Documents\Хобби\Программатрон\programmatron\projects\FunctionsRealization\obj\Release\FunctionsRealization.dll
+C:\Users\2sera\Documents\Хобби\Программатрон\programmatron\projects\FunctionsRealization\obj\Release\FunctionsRealization.pdb
+K:\Хобби\Программатрон\programmatron\projects\FunctionsRealization\bin\Release\FunctionsRealization.dll
+K:\Хобби\Программатрон\programmatron\projects\FunctionsRealization\bin\Release\FunctionsRealization.pdb
+K:\Хобби\Программатрон\programmatron\projects\FunctionsRealization\obj\Release\FunctionsRealization.csprojResolveAssemblyReference.cache
+K:\Хобби\Программатрон\programmatron\projects\FunctionsRealization\obj\Release\FunctionsRealization.dll
+K:\Хобби\Программатрон\programmatron\projects\FunctionsRealization\obj\Release\FunctionsRealization.pdb

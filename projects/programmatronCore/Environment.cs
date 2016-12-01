@@ -9,13 +9,15 @@ using programmatronCore;
 using System.Windows;
 using System.IO;
 
-namespace InterpretatorEnveronment
+namespace InterpretatorEnvironment
 {
     public class Env
     {
         public static Log log;
         public static Reporter reporter;
+        public static DebugMode Debug;
     }
+
     public class Log
     {
         String logFilePath;
@@ -41,7 +43,7 @@ namespace InterpretatorEnveronment
             logPipe = new NamedPipeClientStream("programmatronDebugPipe");
         }
 
-        void prepareDirectory()
+        void prepareDirectory()//your anus
         {
             if (!Directory.Exists("Logs"))
                 Directory.CreateDirectory("Logs");
@@ -126,5 +128,36 @@ namespace InterpretatorEnveronment
                 Console.WriteLine(currentTitle);
             Console.WriteLine(currentText);
         }
+    }
+
+    /// <summary>
+    /// Класс точки остановы. Необходим для дебага интерпретируемой программы.
+    /// </summary>
+    public class BreakPoint
+    {
+        private int _StringNumber;
+
+        public int StringNumber
+        {
+            get { return _StringNumber; }
+            set { _StringNumber = value; }
+        }
+    }
+
+    public class DebugMode
+    {
+        private List<BreakPoint> _BreakPoints;
+
+        public List<BreakPoint> BreakPoints
+        {
+            get { return _BreakPoints; }
+        }
+
+        public DebugMode()
+        {
+            _BreakPoints = new List<BreakPoint>();
+        }
+
+
     }
 }

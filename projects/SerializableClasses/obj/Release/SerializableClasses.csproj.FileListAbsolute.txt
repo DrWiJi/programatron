@@ -3,3 +3,13 @@ D:\Repos\programatron\projects\SerializableClasses\bin\Release\SerializableClass
 D:\Repos\programatron\projects\SerializableClasses\obj\Release\SerializableClasses.dll
 D:\Repos\programatron\projects\SerializableClasses\obj\Release\SerializableClasses.pdb
 D:\Repos\programatron\projects\SerializableClasses\obj\Release\SerializableClasses.csprojResolveAssemblyReference.cache
+C:\Users\2sera\Documents\Хобби\Программатрон\programmatron\projects\SerializableClasses\bin\Release\SerializableClasses.dll
+C:\Users\2sera\Documents\Хобби\Программатрон\programmatron\projects\SerializableClasses\bin\Release\SerializableClasses.pdb
+C:\Users\2sera\Documents\Хобби\Программатрон\programmatron\projects\SerializableClasses\obj\Release\SerializableClasses.csprojResolveAssemblyReference.cache
+C:\Users\2sera\Documents\Хобби\Программатрон\programmatron\projects\SerializableClasses\obj\Release\SerializableClasses.dll
+C:\Users\2sera\Documents\Хобби\Программатрон\programmatron\projects\SerializableClasses\obj\Release\SerializableClasses.pdb
+K:\Хобби\Программатрон\programmatron\projects\SerializableClasses\bin\Release\SerializableClasses.dll
+K:\Хобби\Программатрон\programmatron\projects\SerializableClasses\bin\Release\SerializableClasses.pdb
+K:\Хобби\Программатрон\programmatron\projects\SerializableClasses\obj\Release\SerializableClasses.csprojResolveAssemblyReference.cache
+K:\Хобби\Программатрон\programmatron\projects\SerializableClasses\obj\Release\SerializableClasses.dll
+K:\Хобби\Программатрон\programmatron\projects\SerializableClasses\obj\Release\SerializableClasses.pdb
